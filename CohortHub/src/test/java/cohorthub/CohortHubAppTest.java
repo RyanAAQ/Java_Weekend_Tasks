@@ -44,8 +44,8 @@ class CohortHubAppTest {
                 + "1\nL2\nBola\nbola@mail.com\n"
                 + "6\nJava\n"
                 + "7\nJava\nL1\n"
-                + "7\nJava\nL1\n"          // duplicate add
-                + "9\nL2\n9\nL1\n10\n"     // Bola arrived first
+                + "7\nJava\nL1\n"
+                + "9\nL2\n9\nL1\n10\n"
                 + "11\n0\n";
         String output = runApp(script);
         assertTrue(output.contains("already in 'Java'"));

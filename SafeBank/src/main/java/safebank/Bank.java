@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class Bank {
 
     private final Map<String, Account> accounts = new LinkedHashMap<>();
@@ -30,7 +29,6 @@ public class Bank {
     public List<Account> allAccounts() {
         return new ArrayList<>(accounts.values());
     }
-
 
     public void transfer(String fromId, String toId, BigDecimal amount)
             throws InvalidAccountException, InvalidAmountException, InsufficientFundsException {

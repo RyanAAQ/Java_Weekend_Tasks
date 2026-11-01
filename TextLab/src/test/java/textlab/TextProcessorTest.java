@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 class TextProcessorTest {
 
-    // -------------------------------------------------- repeated spaces, tabs, line breaks
-
     @Test
     void cleanCollapsesSpacesTabsAndLineBreaksAndTrims() {
         String messy = "  Hello \t\t world \n\n  from   Java \r\n ";
@@ -19,7 +17,7 @@ class TextProcessorTest {
     void cleanDoesNotChangeTheOriginalString() {
         String original = "  a   b  ";
         TextProcessor.clean(original);
-        assertEquals("  a   b  ", original); // Strings are immutable, so the original is preserved
+        assertEquals("  a   b  ", original);
     }
 
     @Test
@@ -33,8 +31,6 @@ class TextProcessorTest {
     void wordCountIgnoresExtraWhitespaceAndPunctuation() {
         assertEquals(4, TextProcessor.wordCount("  Hello,   world!\n\tThis is  "));
     }
-
-    // ------------------------------------------------------------------ sentences
 
     @Test
     void sentencesAreSplitAtRunsOfTerminators() {
@@ -52,8 +48,6 @@ class TextProcessorTest {
         assertEquals(1, TextProcessor.sentenceCount("Wait..."));
     }
 
-    // -------------------------------------------------------- mixed-case words / Java vs JavaScript
-
     @Test
     void searchIgnoresCase() {
         assertEquals(3, TextProcessor.wordFrequency("Java JAVA java", "java"));
@@ -68,7 +62,6 @@ class TextProcessorTest {
 
     @Test
     void aHyphenSeparatesWordsSoJavaInsideJavaDashScriptIsAWholeWord() {
-        // Rule from the brief: punctuation separates words, so "java-script" is the two words "java" and "script".
         assertEquals(1, TextProcessor.wordFrequency("java-script", "java"));
     }
 
@@ -83,8 +76,6 @@ class TextProcessorTest {
         assertEquals("cat,  dog\tcat!", TextProcessor.replaceWord("cat,  dog\tcat!", "bird", "x"));
         assertEquals("a-X-c", TextProcessor.replaceWord("a-b-c", "b", "X"));
     }
-
-    // -------------------------------------------------------------------- palindromes
 
     @Test
     void classicPalindromeWithPunctuationIsRecognised() {
@@ -101,8 +92,6 @@ class TextProcessorTest {
         assertFalse(TextProcessor.isPalindrome("?!... ,,, ---"));
     }
 
-    // ------------------------------------------------------------------ longest words
-
     @Test
     void longestWordsReturnsAllTiesWithoutDuplicates() {
         List<String> result = TextProcessor.longestWords("The quick brown fox jumps over the lazy QUICK dogs");
@@ -113,8 +102,6 @@ class TextProcessorTest {
     void longestWordsDeduplicatesIgnoringCase() {
         assertEquals(List.of("Planet"), TextProcessor.longestWords("Planet PLANET planet sun"));
     }
-
-    // ------------------------------------------------------------- empty / no-word input
 
     @Test
     void emptyAndWhitespaceOnlyInputNeverCrash() {
@@ -143,12 +130,10 @@ class TextProcessorTest {
         assertEquals("some text", TextProcessor.replaceWord("some text", "", "x"));
     }
 
-    // ---------------------------------------------------------------------- stretch goal
-
     @Test
     void firstDifferenceFindsTheFirstDifferingPosition() {
         assertEquals(4, TextProcessor.firstDifference("The cat sat", "The dog sat"));
         assertEquals(-1, TextProcessor.firstDifference("same", "same"));
-        assertEquals(3, TextProcessor.firstDifference("abc", "abcd")); // one is a prefix of the other
+        assertEquals(3, TextProcessor.firstDifference("abc", "abcd"));
     }
 }

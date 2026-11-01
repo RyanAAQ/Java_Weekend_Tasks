@@ -14,7 +14,6 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 
-
 public class Cohort {
 
     private final Map<String, Learner> learners = new HashMap<>();
@@ -45,7 +44,6 @@ public class Cohort {
         return learner;
     }
 
-
     public Learner update(String id, String newName, String newEmail) throws CohortException {
         Learner learner = find(id);
         String name = (newName == null || newName.isBlank()) ? learner.getName() : newName.trim();
@@ -59,7 +57,6 @@ public class Cohort {
         return learner;
     }
 
-
     public void remove(String id) throws CohortException {
         Learner learner = find(id);
         learners.remove(learner.getId());
@@ -68,7 +65,6 @@ public class Cohort {
         }
         supportQueue.remove(learner);
     }
-
 
     public List<Learner> learnersSorted() {
         List<Learner> sorted = new ArrayList<>(learners.values());
@@ -83,7 +79,6 @@ public class Cohort {
         }
         groups.put(name, new HashSet<>());
     }
-
 
     public boolean addToGroup(String groupName, String learnerId) throws CohortException {
         Set<Learner> members = findGroup(groupName);
@@ -112,7 +107,6 @@ public class Cohort {
         return new ArrayList<>(groups.keySet());
     }
 
-
     public void requestSupport(String learnerId) throws CohortException {
         Learner learner = find(learnerId);
         if (supportQueue.contains(learner)) {
@@ -120,7 +114,6 @@ public class Cohort {
         }
         supportQueue.add(learner);
     }
-
 
     public Optional<Learner> attendNext() {
         return Optional.ofNullable(supportQueue.poll());
@@ -142,7 +135,6 @@ public class Cohort {
         return supportQueue.size();
     }
 
-
     public Map<String, Integer> membershipCounts() {
         Map<String, Integer> counts = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         for (Map.Entry<String, Set<Learner>> entry : groups.entrySet()) {
@@ -151,13 +143,11 @@ public class Cohort {
         return counts;
     }
 
-
     public List<Learner> inBoth(String groupA, String groupB) throws CohortException {
         Set<Learner> result = new HashSet<>(findGroup(groupA));
         result.retainAll(findGroup(groupB));
         return sorted(result);
     }
-
 
     public List<Learner> inEitherButNotBoth(String groupA, String groupB) throws CohortException {
         Set<Learner> a = findGroup(groupA);
@@ -177,7 +167,6 @@ public class Cohort {
         }
         return members;
     }
-
 
     private boolean emailInUse(String email, Learner except) {
         String wanted = email.toLowerCase(Locale.ROOT);

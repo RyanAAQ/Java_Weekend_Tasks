@@ -15,8 +15,6 @@ class BankAndAppTest {
         return new BigDecimal(value);
     }
 
-    // ------------------------------------------------------------ transfers
-
     @Test
     void successfulTransferMovesMoneyAndRecordsBothSides() throws Exception {
         Bank bank = new Bank();
@@ -55,8 +53,6 @@ class BankAndAppTest {
         assertEquals("ACC-1001", bank.openAccount("Ada", bd("100")).getId());
     }
 
-    // ------------------------------------------------------ console behaviour
-
     private String runApp(String script) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         java.io.InputStream oldIn = System.in;
@@ -88,7 +84,6 @@ class BankAndAppTest {
 
     @Test
     void successAfterFailureWorksThroughTheMenu() {
-        // create account, deposit -500 (rejected), deposit 1000 (works), exit
         String output = runApp("1\nAda\n200000\n3\n-500\n3\n1000\n5\n0\n");
         assertTrue(output.contains("Deposit rejected"));
         assertTrue(output.contains("Deposit successful"));

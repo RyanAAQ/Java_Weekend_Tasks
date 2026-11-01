@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-
 public class SafeBankApp {
 
     private final Scanner in;
@@ -150,7 +149,6 @@ public class SafeBankApp {
         System.out.print(message);
         return in.nextLine().trim();
     }
-
 
     private BigDecimal readAmount(String message) {
         String text = prompt(message).replace(",", "");

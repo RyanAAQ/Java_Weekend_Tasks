@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class Account {
 
     public static final BigDecimal WITHDRAWAL_LIMIT = new BigDecimal("100000.00");
@@ -44,7 +43,6 @@ public class Account {
         return balance;
     }
 
-
     public List<Transaction> getHistory() {
         return Collections.unmodifiableList(history);
     }
@@ -53,7 +51,6 @@ public class Account {
         validateDeposit(amount);
         applyCredit(amount, Transaction.Type.DEPOSIT);
     }
-
 
     void validateDeposit(BigDecimal amount) throws InvalidAmountException {
         requirePositive(amount);
@@ -65,7 +62,6 @@ public class Account {
         applyDebit(amount, Transaction.Type.WITHDRAWAL);
     }
 
-
     void validateWithdrawal(BigDecimal amount)
             throws InvalidAmountException, InsufficientFundsException, WithdrawalLimitExceededException {
         validateDebitable(amount);
@@ -74,7 +70,6 @@ public class Account {
                     "The single-withdrawal limit is ₦%,.2f.", WITHDRAWAL_LIMIT));
         }
     }
-
 
     void validateTransferOut(BigDecimal amount) throws InvalidAmountException, InsufficientFundsException {
         validateDebitable(amount);

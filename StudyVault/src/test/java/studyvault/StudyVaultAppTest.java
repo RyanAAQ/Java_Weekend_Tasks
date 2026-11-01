@@ -75,7 +75,7 @@ class StudyVaultAppTest {
         assertTrue(output.contains("Problem: No note called 'Ghost' was found."));
         assertTrue(output.contains("Invalid option '99'"));
         assertTrue(output.contains("Goodbye"));
-        assertFalse(output.contains("Exception")); // no raw stack traces
+        assertFalse(output.contains("Exception"));
     }
 
     @Test

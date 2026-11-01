@@ -17,14 +17,12 @@ class CohortTest {
         cohort = new Cohort();
         cohort.register("L1", "Zainab", "zainab@mail.com");
         cohort.register("L2", "Ade", "ade@mail.com");
-        cohort.register("L3", "Ade", "ade2@mail.com"); // same name as L2 on purpose
+        cohort.register("L3", "Ade", "ade2@mail.com");
     }
 
     private static List<String> ids(List<Learner> learners) {
         return learners.stream().map(Learner::getId).toList();
     }
-
-    // ----------------------------------------------------------- registration rules
 
     @Test
     void duplicateLearnerIdIsRejected() {
@@ -55,8 +53,6 @@ class CohortTest {
         assertEquals("Zainab", assertDoesNotThrow(() -> cohort.find("L1")).getName());
     }
 
-    // ------------------------------------------------------------------------ update
-
     @Test
     void updateChangesNameAndEmailButNeverTheId() throws Exception {
         Learner updated = cohort.update("L1", "Zainab Bello", "zb@mail.com");
@@ -80,27 +76,22 @@ class CohortTest {
         cohort.createGroup("Java");
         cohort.addToGroup("Java", "L1");
         cohort.update("L1", "Completely Different", "");
-        // because equals/hashCode use only the immutable ID, the learner is still found in the set
         assertEquals(List.of("Java"), cohort.groupsOf("L1"));
         assertFalse(cohort.addToGroup("Java", "L1"));
     }
 
-    // ---------------------------------------------------------------------- sorting
-
     @Test
     void learnersAreSortedByNameThenById() {
-        assertEquals(List.of("L2", "L3", "L1"), ids(cohort.learnersSorted())); // Ade(L2), Ade(L3), Zainab(L1)
+        assertEquals(List.of("L2", "L3", "L1"), ids(cohort.learnersSorted()));
     }
 
     @Test
     void sortingDoesNotCorruptIdLookup() throws Exception {
         List<Learner> sorted = cohort.learnersSorted();
-        sorted.clear(); // even destroying the sorted copy must not matter
+        sorted.clear();
         assertEquals("Ade", cohort.find("L2").getName());
         assertEquals(3, cohort.totalLearners());
     }
-
-    // ----------------------------------------------------------------------- groups
 
     @Test
     void addingTheSameLearnerToAGroupTwiceCreatesNoDuplicate() throws Exception {
@@ -133,8 +124,6 @@ class CohortTest {
         assertThrows(CohortException.class, () -> cohort.createGroup("JAVA"));
         assertEquals(1, cohort.totalGroups());
     }
-
-    // ---------------------------------------------------------------------- support queue
 
     @Test
     void supportRequestsAreHandledInArrivalOrder() throws Exception {
@@ -169,8 +158,6 @@ class CohortTest {
         assertTrue(next.isEmpty());
     }
 
-    // ------------------------------------------------------------------------ removal
-
     @Test
     void removingALearnerLeavesNoStaleMembershipsOrQueueEntries() throws Exception {
         cohort.createGroup("Java");
@@ -197,8 +184,6 @@ class CohortTest {
         assertEquals(3, cohort.totalLearners());
     }
 
-    // ------------------------------------------------------------------------- report
-
     @Test
     void reportShowsTotalsGroupCountsAndWaitingNumber() throws Exception {
         cohort.createGroup("Java");
@@ -214,8 +199,6 @@ class CohortTest {
         assertEquals(1, cohort.waitingCount());
     }
 
-    // ------------------------------------------------------------------- stretch goal
-
     @Test
     void setOperationsShowLearnersInBothAndInEitherButNotBoth() throws Exception {
         cohort.createGroup("Java");
@@ -228,8 +211,6 @@ class CohortTest {
         assertEquals(List.of("L2"), ids(cohort.inBoth("Java", "Algorithms")));
         assertEquals(List.of("L3", "L1"), ids(cohort.inEitherButNotBoth("Java", "Algorithms")));
     }
-
-    // ---------------------------------------------------------------- equals / hashCode
 
     @Test
     void learnersWithTheSameIdAreEqualRegardlessOfNameAndEmail() {

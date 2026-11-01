@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-
 public class TextLabApp {
 
     private final Scanner in;

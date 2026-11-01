@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-
 public class NoteStore {
 
     private static final String EXTENSION = ".txt";
@@ -40,7 +39,6 @@ public class NoteStore {
         }
     }
 
-
     public void create(String title, List<String> lines, boolean overwrite) throws NoteException {
         Path file = notePath(title);
         if (Files.exists(file) && !overwrite) {
@@ -53,7 +51,6 @@ public class NoteStore {
             throw new NoteStorageException("Could not save the note: " + e.getMessage(), e);
         }
     }
-
 
     public void append(String title, List<String> lines) throws NoteException {
         Path file = existingNote(title);
@@ -80,16 +77,13 @@ public class NoteStore {
         }
     }
 
-
     public List<String> list() throws NoteException {
         return listTitlesIn(notesDir);
     }
 
-
     public List<String> listBackups() throws NoteException {
         return listTitlesIn(backupsDir);
     }
-
 
     public List<SearchHit> search(String keyword) throws NoteException {
         if (keyword == null || keyword.isBlank()) {
@@ -114,7 +108,6 @@ public class NoteStore {
         return hits;
     }
 
-
     public void delete(String title) throws NoteException {
         Path file = existingNote(title);
         try {
@@ -123,7 +116,6 @@ public class NoteStore {
             throw new NoteStorageException("Could not delete the note: " + e.getMessage(), e);
         }
     }
-
 
     public Path export(String title) throws NoteException {
         Path source = existingNote(title);
@@ -135,7 +127,6 @@ public class NoteStore {
         }
         return target;
     }
-
 
     public void restore(String title, boolean overwrite) throws NoteException {
         Path backup = backupPath(title);
@@ -153,7 +144,6 @@ public class NoteStore {
         }
     }
 
-
     public NoteInfo info(String title) throws NoteException {
         Path file = existingNote(title);
         try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
@@ -167,7 +157,6 @@ public class NoteStore {
             throw new NoteStorageException("Could not read note details: " + e.getMessage(), e);
         }
     }
-
 
     Path notePath(String title) throws InvalidNoteNameException {
         return safePath(notesDir, title);
@@ -201,7 +190,6 @@ public class NoteStore {
         }
         return resolved;
     }
-
 
     private static String cleanTitle(String title) {
         String name = title == null ? "" : title.trim();
@@ -258,7 +246,6 @@ public class NoteStore {
             return last == '\n' || last == '\r';
         }
     }
-
 
     static void copyBytes(Path source, Path target) throws IOException {
         try (InputStream in = new FileInputStream(source.toFile());

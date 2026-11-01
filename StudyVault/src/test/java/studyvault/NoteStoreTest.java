@@ -24,8 +24,6 @@ class NoteStoreTest {
         store = new NoteStore(base);
     }
 
-    // ------------------------------------------------------ folders and persistence
-
     @Test
     void foldersAreCreatedIfAbsent() throws Exception {
         Path fresh = base.resolve("does").resolve("not").resolve("exist");
@@ -38,12 +36,10 @@ class NoteStoreTest {
     void notesSurviveARestart() throws Exception {
         store.create("Java", List.of("Streams are fun", "Collections too"), false);
 
-        NoteStore afterRestart = new NoteStore(base); // a brand new object reading the same folder
+        NoteStore afterRestart = new NoteStore(base);
         assertEquals(List.of("Java"), afterRestart.list());
         assertEquals(List.of("Streams are fun", "Collections too"), afterRestart.read("Java"));
     }
-
-    // ------------------------------------------------------------------ append
 
     @Test
     void appendingKeepsExistingContent() throws Exception {
@@ -65,19 +61,14 @@ class NoteStoreTest {
         assertTrue(store.list().isEmpty());
     }
 
-    // -------------------------------------------------------------------- UTF-8
-
     @Test
     void utf8TextSuchAsTheNairaSignSurvivesSavingAndReading() throws Exception {
         List<String> lines = List.of("Budget: ₦5,000", "Café – résumé – 日本語");
         store.create("Budget", lines, false);
         assertEquals(lines, store.read("Budget"));
-        // and the bytes on disk really are UTF-8:
         String raw = Files.readString(base.resolve("notes").resolve("Budget.txt"), StandardCharsets.UTF_8);
         assertTrue(raw.contains("₦5,000"));
     }
-
-    // ------------------------------------------------------------ overwrite safety
 
     @Test
     void creatingOverAnExistingNoteIsRefusedAndTheOriginalIsKept() throws Exception {
@@ -93,8 +84,6 @@ class NoteStoreTest {
         assertEquals(List.of("replacement"), store.read("Plan"));
     }
 
-    // ------------------------------------------------------------------ invalid names
-
     @Test
     void invalidNamesAreRejectedBeforeAnyFileIsTouched() throws Exception {
         String[] bad = {"", "   ", null, "../secret", "..", "a/b", "a\\b", "C:evil", "name?", ".hidden", "x..y"};
@@ -104,7 +93,6 @@ class NoteStoreTest {
         }
         assertTrue(store.list().isEmpty());
         try (var files = Files.list(base)) {
-            // nothing but the two storage folders exists in the base directory
             assertEquals(2, files.count());
         }
     }
@@ -123,8 +111,6 @@ class NoteStoreTest {
         assertEquals(List.of("Maths"), store.list());
     }
 
-    // ------------------------------------------------------------------ missing files
-
     @Test
     void missingNotesGiveClearExceptionsNotCrashes() {
         assertThrows(NoteNotFoundException.class, () -> store.read("Nope"));
@@ -133,8 +119,6 @@ class NoteStoreTest {
         assertThrows(NoteNotFoundException.class, () -> store.restore("Nope", false));
         assertThrows(NoteNotFoundException.class, () -> store.info("Nope"));
     }
-
-    // ------------------------------------------------------------------------ search
 
     @Test
     void searchReportsFilenameAndLineNumberIgnoringCase() throws Exception {
@@ -155,16 +139,12 @@ class NoteStoreTest {
         assertThrows(NoteException.class, () -> store.search("  "));
     }
 
-    // ---------------------------------------------------------------------- delete
-
     @Test
     void deleteRemovesTheNote() throws Exception {
         store.create("Temp", List.of("x"), false);
         store.delete("Temp");
         assertTrue(store.list().isEmpty());
     }
-
-    // --------------------------------------------------------------- export / restore
 
     @Test
     void exportedCopyHasIdenticalBytes() throws Exception {
@@ -177,7 +157,7 @@ class NoteStoreTest {
     @Test
     void largeFilesBiggerThanTheBufferAreCopiedExactly() throws Exception {
         List<String> lines = new ArrayList<>();
-        for (int i = 0; i < 5000; i++) { // far more than one 8 KB buffer
+        for (int i = 0; i < 5000; i++) {
             lines.add("Line " + i + " with naira ₦" + i);
         }
         store.create("Big", lines, false);
@@ -201,12 +181,12 @@ class NoteStoreTest {
     void restoreDoesNotSilentlyOverwriteAnExistingNote() throws Exception {
         store.create("Doc", List.of("version 1"), false);
         store.export("Doc");
-        store.create("Doc", List.of("version 2"), true); // note changed after the backup
+        store.create("Doc", List.of("version 2"), true);
 
         assertThrows(NoteExistsException.class, () -> store.restore("Doc", false));
-        assertEquals(List.of("version 2"), store.read("Doc")); // untouched
+        assertEquals(List.of("version 2"), store.read("Doc"));
 
-        store.restore("Doc", true); // only when explicitly allowed
+        store.restore("Doc", true);
         assertEquals(List.of("version 1"), store.read("Doc"));
     }
 
@@ -219,11 +199,9 @@ class NoteStoreTest {
         assertEquals(List.of("A", "B"), store.listBackups());
     }
 
-    // ------------------------------------------------------------------ stretch goal
-
     @Test
     void infoReportsSizeLinesAndLastModified() throws Exception {
-        store.create("Stats", List.of("abc", "₦"), false); // 'abc\n' = 4 bytes, '₦\n' = 3 + 1 bytes
+        store.create("Stats", List.of("abc", "₦"), false);
         NoteInfo info = store.info("Stats");
         assertEquals(8, info.sizeInBytes());
         assertEquals(2, info.lineCount());

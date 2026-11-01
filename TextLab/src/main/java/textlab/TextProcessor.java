@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public final class TextProcessor {
 
     private TextProcessor() {
@@ -14,7 +13,6 @@ public final class TextProcessor {
     public static int charCount(String text) {
         return text == null ? 0 : text.length();
     }
-
 
     public static int charCountWithoutWhitespace(String text) {
         if (text == null) {
@@ -32,7 +30,6 @@ public final class TextProcessor {
     public static int wordCount(String text) {
         return words(text).size();
     }
-
 
     public static int sentenceCount(String text) {
         if (text == null) {
@@ -57,7 +54,6 @@ public final class TextProcessor {
         return sentences;
     }
 
-
     public static String clean(String text) {
         if (text == null) {
             return "";
@@ -79,7 +75,6 @@ public final class TextProcessor {
         return result.toString();
     }
 
-
     public static int wordFrequency(String text, String word) {
         if (word == null || word.isBlank()) {
             return 0;
@@ -93,7 +88,6 @@ public final class TextProcessor {
         }
         return count;
     }
-
 
     public static String replaceWord(String text, String target, String replacement) {
         if (text == null) {
@@ -123,7 +117,6 @@ public final class TextProcessor {
         return result.toString();
     }
 
-
     public static boolean isPalindrome(String text) {
         if (text == null) {
             return false;
@@ -146,7 +139,6 @@ public final class TextProcessor {
         return true;
     }
 
-
     public static List<String> longestWords(String text) {
         int longest = 0;
         Map<String, String> unique = new LinkedHashMap<>();
@@ -162,7 +154,6 @@ public final class TextProcessor {
         return new ArrayList<>(unique.values());
     }
 
-
     public static int firstDifference(String a, String b) {
         String x = a == null ? "" : a;
         String y = b == null ? "" : b;
@@ -174,7 +165,6 @@ public final class TextProcessor {
         }
         return x.length() == y.length() ? -1 : shared;
     }
-
 
     static List<String> words(String text) {
         List<String> found = new ArrayList<>();
