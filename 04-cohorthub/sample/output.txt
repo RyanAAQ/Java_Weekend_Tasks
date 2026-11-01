@@ -1,0 +1,292 @@
+=== CohortHub: Learners & Study Groups ===
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 1
+Learner ID: L1
+Name: Zainab Bello
+Email: zainab@mail.com
+Registered: L1 | Zainab Bello | zainab@mail.com
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 1
+Learner ID: L2
+Name: Ade Smith
+Email: ade@mail.com
+Registered: L2 | Ade Smith | ade@mail.com
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 1
+Learner ID: L3
+Name: Ade Jones
+Email: ade2@mail.com
+Registered: L3 | Ade Jones | ade2@mail.com
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 1
+Learner ID: L1
+Name: Someone Else
+Email: other@mail.com
+Problem: A learner with ID 'L1' is already registered.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 1
+Learner ID: L9
+Name: Someone Else
+Email: ZAINAB@mail.com
+Problem: The email 'ZAINAB@mail.com' is already registered.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 5
+  L3 | Ade Jones | ade2@mail.com
+  L2 | Ade Smith | ade@mail.com
+  L1 | Zainab Bello | zainab@mail.com
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 6
+Group name: Java
+Group 'Java' created.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 6
+Group name: Algorithms
+Group 'Algorithms' created.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 7
+Group name: Java
+Learner ID: L1
+Added to 'Java'.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 7
+Group name: Java
+Learner ID: L1
+That learner is already in 'Java', so nothing was changed.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 7
+Group name: Java
+Learner ID: L2
+Added to 'Java'.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 7
+Group name: Algorithms
+Learner ID: L2
+Added to 'Algorithms'.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 7
+Group name: Algorithms
+Learner ID: L3
+Added to 'Algorithms'.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 8
+Learner ID: L2
+Groups: Algorithms, Java
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 9
+Learner ID: L2
+Added to the mentor-support queue. Learners waiting: 1
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 9
+Learner ID: L1
+Added to the mentor-support queue. Learners waiting: 2
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 9
+Learner ID: L1
+Problem: Zainab Bello already has a pending support request.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 10
+Now attending to: Ade Smith (L2)
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 10
+Now attending to: Zainab Bello (L1)
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 10
+No learners are waiting for support right now.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 10
+No learners are waiting for support right now.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 12
+First group: Java
+Second group: Algorithms
+In both: Ade Smith
+In one but not both: Ade Jones, Zainab Bello
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 4
+Learner ID to remove: L2
+Removed Ade Smith and all their group memberships and support requests.
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 11
+Total learners:         2
+Number of groups:       2
+  Algorithms: 1 member(s)
+  Java: 1 member(s)
+Waiting for support:    0
+
+ 1. Register learner          7. Add learner to a group
+ 2. Find learner              8. Show a learner's groups
+ 3. Update learner            9. Request mentor support
+ 4. Remove learner           10. Attend to next support request
+ 5. List learners (sorted)   11. Show report
+ 6. Create group             12. Compare two groups (stretch)
+ 0. Exit
+Choose an option: 0
+Goodbye!

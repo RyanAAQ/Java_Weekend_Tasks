@@ -1,0 +1,218 @@
+=== TextLab: Text Analysis & Cleanup ===
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 1
+Type or paste your passage. Finish with a line containing only END.
+  I like   Java	and JavaScript.
+Java is fun!!  JAVA rocks...   java too
+END
+Passage saved (72 characters).
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 2
+Characters (with whitespace):    72
+Characters (without whitespace): 53
+Words:                           12
+Sentences:                       4
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 3
+Whitespace cleaned. Current passage: "I like Java and JavaScript. Java is fun!! JAVA rocks... java too"
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 2
+Characters (with whitespace):    64
+Characters (without whitespace): 53
+Words:                           12
+Sentences:                       4
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 4
+Word to search for: java
+"java" appears 4 times (whole word, ignoring case).
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 5
+Word to replace: java
+Replace with: Kotlin
+Replaced 4 occurrences.
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 8
+Original: "  I like   Java	and JavaScript.
+Java is fun!!  JAVA rocks...   java too"
+Current:  "I like Kotlin and JavaScript. Kotlin is fun!! Kotlin rocks... Kotlin too"
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 9
+They first differ at position 0 (counting from 0).
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 6
+Text to check: A man, a plan, a canal: Panama!
+Yes, it is a palindrome (ignoring case, spaces and punctuation).
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 7
+Longest word(s) (10 characters): JavaScript
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 1
+Type or paste your passage. Finish with a line containing only END.
+   
+END
+Passage saved (4 characters).
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 2
+Characters (with whitespace):    4
+Characters (without whitespace): 0
+Words:                           0
+Sentences:                       0
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 7
+There are no words in the passage yet.
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 99
+Invalid option '99'. Please enter a number from the menu.
+
+1. Enter a new passage
+2. Show statistics
+3. Clean whitespace
+4. Search for a word
+5. Replace a word
+6. Check if text is a palindrome
+7. Show longest words
+8. Show original and current passage
+9. Find first difference (original vs current)
+0. Exit
+Choose an option: 0
+Goodbye!

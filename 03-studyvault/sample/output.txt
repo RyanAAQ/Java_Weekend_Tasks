@@ -1,0 +1,234 @@
+=== StudyVault: File-Based Notes ===
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 1
+Note title: Budget
+Type the content. Finish with a line containing only END.
+Rent: ₦150,000
+Data: ₦5,000
+END
+Note 'Budget' saved.
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 1
+Note title: Budget
+Type the content. Finish with a line containing only END.
+a different note
+END
+A note called 'Budget' already exists. Overwrite it? (y/n): n
+Cancelled. The existing note was not changed.
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 4
+Note title to append to: Budget
+Type the content. Finish with a line containing only END.
+Transport: ₦12,000
+END
+Added to 'Budget'.
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 3
+Note title to open: Budget
+--- Budget ---
+Rent: ₦150,000
+Data: ₦5,000
+Transport: ₦12,000
+--- end ---
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 5
+Keyword: data
+Budget.txt, line 2: Data: ₦5,000
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 7
+Note title to export: Budget
+Exported to backups/Budget.txt
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 6
+Note title to delete: Budget
+Really delete 'Budget'? This cannot be undone. (y/n): y
+Deleted 'Budget'.
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 3
+Note title to open: Budget
+Problem: No note called 'Budget' was found.
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 8
+Exported notes: Budget
+Note title to restore: Budget
+Restored 'Budget'.
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 3
+Note title to open: Budget
+--- Budget ---
+Rent: ₦150,000
+Data: ₦5,000
+Transport: ₦12,000
+--- end ---
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 1
+Note title: ../secret
+Problem: A note name cannot contain '..' or start with a dot.
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 3
+Note title to open: Ghost
+Problem: No note called 'Ghost' was found.
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 2
+Your notes:
+  - Budget
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 9
+Note title: Budget
+Title:         Budget
+Size:          53 bytes
+Lines:         3
+Last modified: 2026-11-01T19:25:22.178350344Z
+
+1. Create a note
+2. List notes
+3. Open a note
+4. Append to a note
+5. Search notes for a keyword
+6. Delete a note
+7. Export a note (backup)
+8. Restore an exported note
+9. Note details (size, lines, last modified)
+0. Exit
+Choose an option: 0
+Goodbye! Your notes are saved.

@@ -1,0 +1,37 @@
+1
+Budget
+Rent: ₦150,000
+Data: ₦5,000
+END
+1
+Budget
+a different note
+END
+n
+4
+Budget
+Transport: ₦12,000
+END
+3
+Budget
+5
+data
+7
+Budget
+6
+Budget
+y
+3
+Budget
+8
+Budget
+3
+Budget
+1
+../secret
+3
+Ghost
+2
+9
+Budget
+0

@@ -1,0 +1,24 @@
+1
+  I like   Java	and JavaScript.
+Java is fun!!  JAVA rocks...   java too
+END
+2
+3
+2
+4
+java
+5
+java
+Kotlin
+8
+9
+6
+A man, a plan, a canal: Panama!
+7
+1
+   
+END
+2
+7
+99
+0
