@@ -10,10 +10,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>01-safebank</module>
-        <module>02-textlab</module>
-        <module>03-studyvault</module>
-        <module>04-cohorthub</module>
+        <module>SafeBank</module>
+        <module>TextLab</module>
+        <module>StudyVault</module>
+        <module>CohortHub</module>
     </modules>
 
     <properties>

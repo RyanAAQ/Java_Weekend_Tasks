@@ -7,10 +7,10 @@ Four console projects, one for each topic of the weekend: exception handling, st
 
 | # | Project | Focus | Folder | Tests |
 |---|---------|-------|--------|-------|
-| 1 | SafeBank Transaction Simulator | Exception handling | [`01-safebank`](01-safebank) | 23 |
-| 2 | TextLab, Text Analysis & Cleanup | Strings | [`02-textlab`](02-textlab) | 26 |
-| 3 | StudyVault, File-Based Notes | File handling and I/O streams | [`03-studyvault`](03-studyvault) | 29 |
-| 4 | CohortHub, Learners & Study Groups | Java Collection Framework | [`04-cohorthub`](04-cohorthub) | 27 |
+| 1 | SafeBank Transaction Simulator | Exception handling | [`SafeBank`](SafeBank) | 23 |
+| 2 | TextLab, Text Analysis & Cleanup | Strings | [`TextLab`](TextLab) | 26 |
+| 3 | StudyVault, File-Based Notes | File handling and I/O streams | [`StudyVault`](StudyVault) | 29 |
+| 4 | CohortHub, Learners & Study Groups | Java Collection Framework | [`CohortHub`](CohortHub) | 27 |
 
 Each folder has its own README with what the project does, the rules it enforces, the design decisions, the acceptance checklist (expected vs actual), known limitations and the stretch challenge. Each folder also has a `sample/` folder with the exact input I typed (`input.txt`) and the console output it produced (`output.txt`).
 
@@ -25,10 +25,10 @@ You need Java 17 or newer and Maven.
 ```bash
 mvn test                                   # compile and run all 105 tests
 mvn compile                                # compile only
-java -cp 01-safebank/target/classes safebank.SafeBankApp
-java -cp 02-textlab/target/classes textlab.TextLabApp
-java -cp 03-studyvault/target/classes studyvault.StudyVaultApp
-java -cp 04-cohorthub/target/classes cohorthub.CohortHubApp
+java -cp SafeBank/target/classes safebank.SafeBankApp
+java -cp TextLab/target/classes textlab.TextLabApp
+java -cp StudyVault/target/classes studyvault.StudyVaultApp
+java -cp CohortHub/target/classes cohorthub.CohortHubApp
 ```
 
 The apps print the ₦ sign. If it shows as `?` in a Windows terminal, run `chcp 65001` first or run the apps from IntelliJ.
