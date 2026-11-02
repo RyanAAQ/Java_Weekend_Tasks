@@ -1,71 +1,19 @@
-# 04. CohortHub: Learners & Study Groups
+# CohortHub
 
-**Focus: the Java Collection Framework.** Helps a cohort coordinator manage learners, study groups and mentor support.
+CohortHub is a console app for keeping track of learners, study groups, and requests for mentor support. You can register, find, update, and remove learners; add them to groups; and attend to support requests in the order they came in. It also provides group and cohort summaries, including a comparison of learners shared by two groups.
 
-## What it does
+## Keeping track of learners and groups
 
-- Register learners with a unique ID, a name and a unique email. Find, update and remove learners.
-- Display learners sorted by name, then by ID when names match.
-- Create study groups, add learners without duplicates, and show each learner's groups.
-- Add learners to a mentor-support queue and attend to them first in, first out.
-- Report total learners, number of groups, members per group and the number waiting for support.
-- Stretch: for two groups, show the learners in **both**, and the learners in **either but not both**.
+Learner IDs and email addresses must be unique. Email checks ignore case, and only registered learners can join a group or request support. A learner can join several groups but can have only one pending support request. Removing a learner also removes them from their groups and the queue.
 
-## Business rules
+The app uses a map to find learners by ID, sets to keep group membership unique, and a queue for support requests. It makes a separate list for sorted displays, so sorting the output doesn’t change the stored learners. Group names are kept in alphabetical order and compared without regard to case. Learners are sorted by name, then by ID when names match.
 
-| Rule | Where it is enforced |
-|------|----------------------|
-| Learner IDs are unique and cannot be changed | `Cohort.register` rejects duplicates; `Learner.id` is `final` and `update` never touches it |
-| Emails are unique, ignoring case | `Cohort.emailInUse` |
-| Only registered learners can join groups or the queue | `addToGroup` and `requestSupport` look the learner up first |
-| A learner can be in many groups but have only one pending request | a `Set` per group; a `contains` check on the queue |
-| Removing a learner removes their group memberships and pending request | `Cohort.remove` |
-| Attending to an empty queue gives a helpful message | `attendNext` returns an empty `Optional`; the menu prints a message |
+Learners are identified by ID in the sets. Since an ID doesn’t change when a learner’s name or email is updated, their group membership remains valid. If nobody is waiting for support, the app displays a message instead of trying to remove an item from an empty queue.
 
-## Collection choices (and why)
+## Sample and tests
 
-| Responsibility | Collection | Why it fits |
-|----------------|-----------|-------------|
-| Find a learner by ID | `Map<String, Learner>` (`HashMap`) | Direct lookup by ID, and keys are unique, so duplicate IDs are impossible. |
-| Members of a group | `Set<Learner>` (`HashSet`), one per group, kept in a `Map` by group name | A set cannot hold the same element twice, so adding a learner twice is ignored automatically. |
-| Mentor-support requests | `Queue<Learner>` (`ArrayDeque`) | First in, first out is exactly "attend in arrival order". |
-| Sorted display / reports | `List<Learner>` | A list has an order. It is a **copy** made when displaying, so sorting it cannot affect the map. |
-| Group names | `TreeMap` with `String.CASE_INSENSITIVE_ORDER` | Keeps groups in alphabetical order and treats `Java` and `JAVA` as the same group. |
+See [`sample/input.txt`](sample/input.txt) and [`sample/output.txt`](sample/output.txt) for a sample session. There are 27 JUnit 5 tests under `src/test/java/cohorthub`, covering the learner and group rules as well as the menu.
 
-- **Generics** are used everywhere (`Map<String, Set<Learner>>`, `Queue<Learner>`, `Optional<Learner>`).
-- **A `Comparator`** (`Learner.BY_NAME_THEN_ID`) sorts by name ignoring case, then by ID.
-- **`equals()` and `hashCode()` use the ID only**, and the ID is `final`. A learner's hash code therefore never changes while it sits in a `HashSet`, so updating a learner's name or email cannot break group membership. There is a test for exactly this.
-- **Data is kept in memory.** Persistence is optional in the brief.
+## Limits
 
-## Acceptance checklist
-
-| Check | Input | Expected | Actual |
-|-------|-------|----------|--------|
-| Duplicate learner ID | register `L1` twice | Rejected | `A learner with ID 'L1' is already registered.` Passed |
-| Duplicate email (different case) | register `ZAINAB@mail.com` | Rejected | `The email 'ZAINAB@mail.com' is already registered.` Passed |
-| Sorted by name, then ID | learners Zainab Bello, Ade Smith, Ade Jones, then option `5` | Ade Jones, Ade Smith, Zainab Bello (see note below) | `L3 Ade Jones`, `L2 Ade Smith`, `L1 Zainab Bello` Passed |
-| Same learner added to a group twice | add `L1` to `Java` twice | No duplicate | `That learner is already in 'Java', so nothing was changed.` Passed |
-| Support requests in arrival order | requests: L2, then L1 | L2 attended first | `Now attending to: Ade Smith (L2)`, then `Zainab Bello (L1)` Passed |
-| One pending request per learner | request `L1` twice | Second rejected | `Zainab Bello already has a pending support request.` Passed |
-| Empty queue | attend with nobody waiting | Helpful message | `No learners are waiting for support right now.` Passed |
-| Removal leaves nothing stale | remove `L2` (in 2 groups) and then report | No memberships or queue entries | report shows Algorithms 1, Java 1, waiting 0. Passed |
-| Sorting does not corrupt lookup | (unit test) | Clearing or sorting the display list does not affect `find` | Passed |
-| Stretch: set operations | compare `Java` and `Algorithms` | In both: Ade Smith. In one but not both: Ade Jones, Zainab Bello | exactly that. Passed |
-
-*Sorting note:* names are compared ignoring case, and the ID decides only when two names are identical. In the sample, `Ade Jones` comes before `Ade Smith` because the **full names** differ. The ID tie-break is covered by a unit test with two learners who are both named exactly `Ade`.
-
-The full console session is in [`sample/output.txt`](sample/output.txt) and the typed input in [`sample/input.txt`](sample/input.txt).
-
-## Tests
-
-27 JUnit 5 tests in `src/test/java/cohorthub`: `CohortTest` (every rule) and `CohortHubAppTest` (the menu).
-
-## Stretch goal: completed
-
-Menu option `12` uses set operations (`retainAll` for "in both", and a union minus the intersection for "in either but not both").
-
-## Known limitations
-
-- Everything is stored in memory and is lost when the program exits.
-- Group names are unique ignoring case, and cannot be renamed or deleted in this version.
-- The email check is a simple format check (one `@`, a dot after it, no spaces), not full validation.
+Data is kept in memory and disappears when the app exits. Group names can’t be renamed or deleted. Email validation checks for a basic format (one `@`, a dot after it, and no spaces), but it doesn’t check every valid or invalid email format.

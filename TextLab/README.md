@@ -1,70 +1,21 @@
-# 02. TextLab: Text Analysis & Cleanup
+# TextLab
 
-**Focus: strings.** A tool that helps a learning support team inspect and clean written submissions.
+TextLab is a console app for inspecting and editing a passage. It counts characters, words, and sentences; cleans up whitespace; searches for and replaces whole words without case sensitivity; checks palindromes; and finds the longest words. The original passage stays available after edits. The app can also show the first position where the edited text differs from the original.
 
-## What it does
+## How it treats text
 
-- Show character counts (with and without whitespace), word count and sentence count.
-- Clean whitespace: trim the ends and collapse repeated spaces, tabs and line breaks into one space.
-- Search for a **whole word** and report how many times it appears, ignoring case.
-- Replace every whole-word occurrence of a word, ignoring case.
-- Check whether text is a palindrome, ignoring case, spaces and punctuation.
-- Show the longest word(s) without duplicates.
-- Keep the **original passage** untouched so it can be compared with the edited one.
-- Stretch: find the first position where the original and edited passages differ.
+A word is a run of letters or digits, so punctuation separates words. A run of `.`, `!`, or `?` marks one sentence boundary. If the text ends without punctuation, its final fragment still counts as a sentence. A fragment with no letters or digits does not count, so `!!! ... ???` has zero sentences.
 
-## Processing rules (as given, plus my assumptions)
+Searches match whole words: searching for `Java` won’t match `JavaScript`. Hyphens and apostrophes count as punctuation, so `java-script` is treated as two words and `don't` as `don` and `t`. Longest words are listed once, ignoring case, with the first spelling kept. A passage containing only punctuation is not considered a palindrome. The first-difference position starts at zero; if one passage ends while the rest matches, the position is the length of the shorter passage.
 
-- A **word** is a run of letters or digits. Punctuation separates words.
-- One or more consecutive `.`, `!` or `?` form **one** sentence boundary.
-- A final fragment without closing punctuation counts as a sentence.
-- A whole-word search for `Java` does **not** match `JavaScript`.
-- Empty or whitespace-only input never crashes the program.
+The sentence rule is deliberately simple. At the moment, it treats periods in abbreviations such as `Dr.` and decimals such as `3.5` as sentence boundaries.
 
-Additional assumptions (the brief asks for these to be stated):
+## Implementation and sample
 
-1. A fragment only counts as a sentence if it contains at least one letter or digit. So `"!!! ... ???"` has 0 sentences.
-2. A hyphen is punctuation, so `java-script` is the two words `java` and `script`. A search for `Java` therefore matches the `java` in `java-script`.
-3. An apostrophe is also punctuation, so `don't` counts as the two words `don` and `t`.
-4. "Longest words" reports each distinct word once (ignoring case), using the spelling that appears first.
-5. The palindrome check needs at least one letter or digit, so text made only of punctuation is not a palindrome.
-6. The first-difference position is counted from 0. If one passage is a prefix of the other, the position is the length of the shorter one.
+`TextProcessor` contains the text logic, separate from the console menu in `TextLabApp`. The original passage is kept separately from the edited one. The app reads a passage until you enter `END` on a line by itself.
 
-## Design decisions
+See [`sample/input.txt`](sample/input.txt) and [`sample/output.txt`](sample/output.txt) for a sample session. There are 26 JUnit 5 tests under `src/test/java/textlab` covering the text rules and menu.
 
-- **Logic and console are separate.** `TextProcessor` has no `Scanner` and no `System.out`, so every rule is tested without the menu. `TextLabApp` only reads and prints.
-- **`StringBuilder` is used** in `clean`, `replaceWord`, and the palindrome check, because each builds text one piece at a time.
-- **No regular-expression or third-party library is needed.** Words and sentences are found by walking through the characters once, which makes the rules easy to explain.
-- **The original is a separate field.** Strings are immutable, so cleaning or replacing creates a new string and the original is never altered.
+## Limits
 
-## Acceptance checklist
-
-| Check | Input | Expected | Actual |
-|-------|-------|----------|--------|
-| Repeated spaces, tabs, line breaks | passage with extra spaces, a tab and a line break, then option `3` | One space between words, no leading or trailing whitespace | `I like Java and JavaScript. Java is fun!! JAVA rocks... java too` Passed |
-| Counts | option `2` | Characters, no-whitespace characters, 12 words, 4 sentences | 72 / 53 / 12 / 4 (before cleaning) and 64 / 53 / 12 / 4 (after). Passed |
-| Mixed case `Java`, `JAVA`, `java` | search `java` in a passage with `Java` (twice), `JAVA`, `java` and `JavaScript` | 4 matches, and `JavaScript` is not counted | `"java" appears 4 times` Passed |
-| Java vs JavaScript | search in a passage containing both | `JavaScript` is not counted as `Java` | Passed (unit tests) |
-| Replace whole words | replace `java` with `Kotlin` | 4 replaced, `JavaScript` unchanged | `Replaced 4 occurrences.` and `JavaScript` stays. Passed |
-| Original preserved | option `8` | Original and current both shown | both shown, original unchanged. Passed |
-| Palindrome | `A man, a plan, a canal: Panama!` | Yes | `Yes, it is a palindrome` Passed |
-| Punctuation but no words | `!!! ... ???` | 0 words, 0 sentences, no crash | Passed (unit tests) |
-| Empty or blank passage | blank line, then `2` and `7` | Zeros and a message, no crash | `Words: 0`, `Sentences: 0`, `There are no words in the passage yet.` Passed |
-| Longest words | option `7` | `JavaScript` (10 characters) | `JavaScript` Passed |
-| Invalid menu choice | `99` | Helpful message | `Invalid option '99'...` Passed |
-
-The full console session is in [`sample/output.txt`](sample/output.txt) and the typed input in [`sample/input.txt`](sample/input.txt).
-
-## Tests
-
-26 JUnit 5 tests in `src/test/java/textlab`: `TextProcessorTest` (every rule, including all the cases from the brief) and `TextLabAppTest` (the menu).
-
-## Stretch goal: completed
-
-Option `9` compares the original and the current passage and reports the first position where they differ (`TextProcessor.firstDifference`).
-
-## Known limitations
-
-- Sentence detection is rule-based, so abbreviations like `Dr.` or decimals like `3.5` are treated as sentence boundaries.
-- Words with apostrophes or hyphens are split (see assumptions 2 and 3).
-- The passage is typed or pasted in the console and ends with a line containing only `END`.
+Sentence detection does not account for abbreviations or decimal numbers yet. Apostrophes and hyphens split words, as described above. Text is entered in the console and ends with a line containing only `END`.
