@@ -50,7 +50,7 @@ All tests were run and passed before submission:
 
 ### 1. Which project was most challenging, and why?
 
-> **TODO: write this in your own words before submitting.** Pick the project that truly took you the longest or taught you the most, and say why in 3 or 4 sentences.
+> CohortHub was the hardest project for me because it had several pieces to manage at once: learners, study groups and the support queue. I had to choose the right collection for each job and make sure changes, like removing a learner, were reflected everywhere. Getting the sorting and duplicate checks right also took some thought.
 
 ### 2. Where did you use concepts from another topic?
 
@@ -63,5 +63,5 @@ All tests were run and passed before submission:
 
 ### 3. What would you improve with more time?
 
-> **TODO: write this in your own words before submitting.** Ideas that are true for this code: save CohortHub's data to a file so it survives a restart, let SafeBank save accounts to disk, and replace TextLab's simple sentence rule with one that understands abbreviations such as "Dr." and decimals such as "3.5".
+> With more time, I would improve TextLab's sentence detection. The current rule can mistake periods in abbreviations like "Dr." or numbers like "3.5" for the end of a sentence.
 # Java_Weekend_Tasks
