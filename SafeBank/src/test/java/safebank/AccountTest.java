@@ -1,5 +1,10 @@
 package safebank;
 
+import safebank.exceptions.InsufficientFundsException;
+import safebank.exceptions.InvalidAccountException;
+import safebank.exceptions.InvalidAmountException;
+import safebank.exceptions.WithdrawalLimitExceededException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
@@ -16,7 +21,7 @@ class AccountTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        account = new Account("ACC-1", "Ada Okafor", bd("200000"));
+        account = new Account("ACC-1", "Ryan", bd("200000"));
     }
 
     @Test
@@ -26,12 +31,12 @@ class AccountTest {
 
     @Test
     void negativeOpeningBalanceIsRejected() {
-        assertThrows(InvalidAccountException.class, () -> new Account("A", "Ada", bd("-1")));
+        assertThrows(InvalidAccountException.class, () -> new Account("A", "Ryan", bd("-1")));
     }
 
     @Test
     void zeroOpeningBalanceIsAllowed() throws Exception {
-        assertEquals(0, new Account("A", "Ada", BigDecimal.ZERO).getBalance().compareTo(BigDecimal.ZERO));
+        assertEquals(0, new Account("A", "Ryan", BigDecimal.ZERO).getBalance().compareTo(BigDecimal.ZERO));
     }
 
     @Test
@@ -61,9 +66,8 @@ class AccountTest {
 
     @Test
     void withdrawalExceedingBalanceIsRejectedAndNothingChanges() throws Exception {
-        Account small = new Account("S", "Small", bd("5000"));
-        InsufficientFundsException e = assertThrows(InsufficientFundsException.class,
-                () -> small.withdraw(bd("8000")));
+        Account small = new Account("S", "Ryan", bd("5000"));
+        InsufficientFundsException e = assertThrows(InsufficientFundsException.class, () -> small.withdraw(bd("8000")));
         assertEquals(0, bd("3000").compareTo(e.getShortfall()));
         assertEquals(0, bd("5000").compareTo(small.getBalance()));
         assertEquals(1, small.getHistory().size());
@@ -107,8 +111,8 @@ class AccountTest {
 
     @Test
     void decimalAmountsAreExact() throws Exception {
-        Account a = new Account("D", "Dee", bd("0.10"));
-        a.deposit(bd("0.20"));
-        assertEquals(0, bd("0.30").compareTo(a.getBalance()));
+        Account account = new Account("D", "Quadri Ariyo", bd("0.10"));
+        account.deposit(bd("0.20"));
+        assertEquals(0, bd("0.30").compareTo(account.getBalance()));
     }
 }

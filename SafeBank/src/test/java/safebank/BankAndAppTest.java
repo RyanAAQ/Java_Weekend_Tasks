@@ -1,5 +1,9 @@
 package safebank;
 
+import safebank.exceptions.InsufficientFundsException;
+import safebank.exceptions.InvalidAccountException;
+import safebank.exceptions.InvalidAmountException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
@@ -18,39 +22,39 @@ class BankAndAppTest {
     @Test
     void successfulTransferMovesMoneyAndRecordsBothSides() throws Exception {
         Bank bank = new Bank();
-        Account a = bank.openAccount("Ada", bd("10000"));
-        Account b = bank.openAccount("Bola", bd("500"));
+        Account sourceAccount = bank.openAccount("Ryan", bd("10000"));
+        Account destinationAccount = bank.openAccount("Quadri Ariyo", bd("500"));
 
-        bank.transfer(a.getId(), b.getId(), bd("2500"));
+        bank.transfer(sourceAccount.getId(), destinationAccount.getId(), bd("2500"));
 
-        assertEquals(0, bd("7500").compareTo(a.getBalance()));
-        assertEquals(0, bd("3000").compareTo(b.getBalance()));
-        assertEquals(Transaction.Type.TRANSFER_OUT, a.getHistory().get(1).type());
-        assertEquals(Transaction.Type.TRANSFER_IN, b.getHistory().get(1).type());
+        assertEquals(0, bd("7500").compareTo(sourceAccount.getBalance()));
+        assertEquals(0, bd("3000").compareTo(destinationAccount.getBalance()));
+        assertEquals(Transaction.Type.TRANSFER_OUT, sourceAccount.getHistory().get(1).type());
+        assertEquals(Transaction.Type.TRANSFER_IN, destinationAccount.getHistory().get(1).type());
     }
 
     @Test
     void failedTransferChangesNeitherBalance() throws Exception {
         Bank bank = new Bank();
-        Account a = bank.openAccount("Ada", bd("1000"));
-        Account b = bank.openAccount("Bola", bd("500"));
+        Account sourceAccount = bank.openAccount("Ryan", bd("1000"));
+        Account destinationAccount = bank.openAccount("Quadri Ariyo", bd("500"));
 
-        assertThrows(InsufficientFundsException.class, () -> bank.transfer(a.getId(), b.getId(), bd("5000")));
-        assertThrows(InvalidAmountException.class, () -> bank.transfer(a.getId(), b.getId(), bd("-5")));
-        assertThrows(InvalidAccountException.class, () -> bank.transfer(a.getId(), "ACC-9999", bd("10")));
-        assertThrows(InvalidAccountException.class, () -> bank.transfer(a.getId(), a.getId(), bd("10")));
+        assertThrows(InsufficientFundsException.class, () -> bank.transfer(sourceAccount.getId(), destinationAccount.getId(), bd("5000")));
+        assertThrows(InvalidAmountException.class, () -> bank.transfer(sourceAccount.getId(), destinationAccount.getId(), bd("-5")));
+        assertThrows(InvalidAccountException.class, () -> bank.transfer(sourceAccount.getId(), "ACC-9999", bd("10")));
+        assertThrows(InvalidAccountException.class, () -> bank.transfer(sourceAccount.getId(), sourceAccount.getId(), bd("10")));
 
-        assertEquals(0, bd("1000").compareTo(a.getBalance()));
-        assertEquals(0, bd("500").compareTo(b.getBalance()));
-        assertEquals(1, a.getHistory().size());
-        assertEquals(1, b.getHistory().size());
+        assertEquals(0, bd("1000").compareTo(sourceAccount.getBalance()));
+        assertEquals(0, bd("500").compareTo(destinationAccount.getBalance()));
+        assertEquals(1, sourceAccount.getHistory().size());
+        assertEquals(1, destinationAccount.getHistory().size());
     }
 
     @Test
     void failedAccountCreationDoesNotUseUpAnAccountNumber() throws Exception {
         Bank bank = new Bank();
         assertThrows(InvalidAccountException.class, () -> bank.openAccount("", bd("100")));
-        assertEquals("ACC-1001", bank.openAccount("Ada", bd("100")).getId());
+        assertEquals("ACC-1001", bank.openAccount("Ryan", bd("100")).getId());
     }
 
     private String runApp(String script) {
@@ -70,7 +74,7 @@ class BankAndAppTest {
 
     @Test
     void nonNumericInputGivesAHelpfulMessageAndTheAppKeepsRunning() {
-        String output = runApp("1\nAda\nabc\n0\n");
+        String output = runApp("1\nRyan\nabc\n0\n");
         assertTrue(output.contains("is not a valid number"));
         assertTrue(output.contains("Goodbye"));
     }
@@ -84,7 +88,7 @@ class BankAndAppTest {
 
     @Test
     void successAfterFailureWorksThroughTheMenu() {
-        String output = runApp("1\nAda\n200000\n3\n-500\n3\n1000\n5\n0\n");
+        String output = runApp("1\nRyan\n200000\n3\n-500\n3\n1000\n5\n0\n");
         assertTrue(output.contains("Deposit rejected"));
         assertTrue(output.contains("Deposit successful"));
         assertTrue(output.contains("₦201,000.00"));
@@ -92,7 +96,7 @@ class BankAndAppTest {
 
     @Test
     void withdrawalLimitMessageIsShownThroughTheMenu() {
-        String output = runApp("1\nAda\n200000\n4\n120000\n0\n");
+        String output = runApp("1\nRyan\n200000\n4\n120000\n0\n");
         assertTrue(output.contains("single-withdrawal limit"));
     }
 
