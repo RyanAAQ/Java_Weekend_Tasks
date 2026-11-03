@@ -1,17 +1,22 @@
 package safebank;
 
+import safebank.exceptions.InsufficientFundsException;
+import safebank.exceptions.InvalidAccountException;
+import safebank.exceptions.InvalidAmountException;
+import safebank.exceptions.WithdrawalLimitExceededException;
+
 import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class SafeBankApp {
 
-    private final Scanner in;
+    private final Scanner scanner;
     private final Bank bank = new Bank();
     private Account current;
 
     public SafeBankApp() {
-        in = new Scanner(System.in);
+        scanner = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
@@ -19,7 +24,7 @@ public class SafeBankApp {
     }
 
     public void run() {
-        System.out.println("=== SafeBank Transaction Simulator ===");
+        System.out.println("=== NIGGER SAFEBANK ===");
         try {
             boolean running = true;
             while (running) {
@@ -46,8 +51,7 @@ public class SafeBankApp {
 
     private void printMenu() {
         System.out.println();
-        System.out.println("Current account: " + (current == null ? "none selected"
-                : current.getId() + " (" + current.getHolderName() + ")"));
+        System.out.println("Current account: " + (current == null ? "none selected" : current.getId() + " (" + current.getHolderName() + ")"));
         System.out.println("1. Create account");
         System.out.println("2. Select account");
         System.out.println("3. Deposit");
@@ -65,10 +69,9 @@ public class SafeBankApp {
         }
         try {
             current = bank.openAccount(name, opening);
-            System.out.println("Account created: " + current.getId() + " for " + current.getHolderName()
-                    + " with balance " + money(current.getBalance()));
-        } catch (InvalidAccountException e) {
-            System.out.println("Could not create account. " + e.getMessage());
+            System.out.println("Account created: " + current.getId() + " for " + current.getHolderName() + " with balance " + money(current.getBalance()));
+        } catch (InvalidAccountException error) {
+            System.out.println("Could not create account. " + error.getMessage());
         }
     }
 
@@ -77,14 +80,14 @@ public class SafeBankApp {
             System.out.println("There are no accounts yet. Create one first.");
             return;
         }
-        for (Account a : bank.allAccounts()) {
-            System.out.println("  " + a.getId() + "  " + a.getHolderName() + "  " + money(a.getBalance()));
+        for (Account account : bank.allAccounts()) {
+            System.out.println("  " + account.getId() + "  " + account.getHolderName() + "  " + money(account.getBalance()));
         }
         try {
             current = bank.find(prompt("Enter account ID: "));
             System.out.println("Now using " + current.getId() + ".");
-        } catch (InvalidAccountException e) {
-            System.out.println(e.getMessage());
+        } catch (InvalidAccountException error) {
+            System.out.println(error.getMessage());
         }
     }
 
@@ -99,8 +102,8 @@ public class SafeBankApp {
         try {
             current.deposit(amount);
             System.out.println("Deposit successful. New balance: " + money(current.getBalance()));
-        } catch (InvalidAmountException e) {
-            System.out.println("Deposit rejected. " + e.getMessage());
+        } catch (InvalidAmountException error) {
+            System.out.println("Deposit rejected. " + error.getMessage());
         }
     }
 
@@ -115,8 +118,8 @@ public class SafeBankApp {
         try {
             current.withdraw(amount);
             System.out.println("Withdrawal successful. New balance: " + money(current.getBalance()));
-        } catch (InvalidAmountException | InsufficientFundsException | WithdrawalLimitExceededException e) {
-            System.out.println("Withdrawal rejected. " + e.getMessage());
+        } catch (InvalidAmountException | InsufficientFundsException | WithdrawalLimitExceededException error) {
+            System.out.println("Withdrawal rejected. " + error.getMessage());
         }
     }
 
@@ -131,9 +134,9 @@ public class SafeBankApp {
             return;
         }
         System.out.println("Successful transactions for " + current.getId() + ":");
-        int n = 1;
-        for (Transaction t : current.getHistory()) {
-            System.out.println(String.format("  %2d. %s", n++, t));
+        int number = 1;
+        for (Transaction transaction : current.getHistory()) {
+            System.out.println(String.format("  %2d. %s", number++, transaction));
         }
     }
 
@@ -147,14 +150,14 @@ public class SafeBankApp {
 
     private String prompt(String message) {
         System.out.print(message);
-        return in.nextLine().trim();
+        return scanner.nextLine().trim();
     }
 
     private BigDecimal readAmount(String message) {
         String text = prompt(message).replace(",", "");
         try {
             return new BigDecimal(text);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException error) {
             System.out.println("'" + text + "' is not a valid number. Please enter digits only, for example 2500 or 2500.50.");
             return null;
         }

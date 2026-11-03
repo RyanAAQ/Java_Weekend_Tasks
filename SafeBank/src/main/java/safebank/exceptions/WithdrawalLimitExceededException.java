@@ -1,4 +1,4 @@
-package safebank;
+package safebank.exceptions;
 
 public class WithdrawalLimitExceededException extends BankException {
     public WithdrawalLimitExceededException(String message) {

@@ -6,13 +6,13 @@ import java.util.Scanner;
 
 public class TextLabApp {
 
-    private final Scanner in;
+    private final Scanner scanner;
 
     private String original = "";
     private String current = "";
 
     public TextLabApp() {
-        in = new Scanner(System.in);
+        scanner = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
@@ -64,7 +64,7 @@ public class TextLabApp {
         System.out.println("Type or paste your passage. Finish with a line containing only END.");
         StringBuilder text = new StringBuilder();
         while (true) {
-            String line = in.nextLine();
+            String line = scanner.nextLine();
             if (line.strip().equals("END")) {
                 break;
             }
@@ -134,6 +134,6 @@ public class TextLabApp {
 
     private String prompt(String message) {
         System.out.print(message);
-        return in.nextLine().trim();
+        return scanner.nextLine().trim();
     }
 }

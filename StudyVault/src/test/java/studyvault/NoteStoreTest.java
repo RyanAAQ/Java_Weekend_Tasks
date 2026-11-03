@@ -1,5 +1,10 @@
 package studyvault;
 
+import studyvault.exceptions.InvalidNoteNameException;
+import studyvault.exceptions.NoteException;
+import studyvault.exceptions.NoteExistsException;
+import studyvault.exceptions.NoteNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
@@ -157,8 +162,8 @@ class NoteStoreTest {
     @Test
     void largeFilesBiggerThanTheBufferAreCopiedExactly() throws Exception {
         List<String> lines = new ArrayList<>();
-        for (int i = 0; i < 5000; i++) {
-            lines.add("Line " + i + " with naira ₦" + i);
+        for (int index = 0; index < 5000; index++) {
+            lines.add("Line " + index + " with naira ₦" + index);
         }
         store.create("Big", lines, false);
         Path backup = store.export("Big");

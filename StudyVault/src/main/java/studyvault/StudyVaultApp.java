@@ -1,5 +1,8 @@
 package studyvault;
 
+import studyvault.exceptions.NoteException;
+import studyvault.exceptions.NoteExistsException;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -9,19 +12,19 @@ import java.util.Scanner;
 
 public class StudyVaultApp {
 
-    private final Scanner in;
+    private final Scanner scanner;
     private final NoteStore store;
 
     public StudyVaultApp(Path baseDir) throws NoteException {
-        in = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         store = new NoteStore(baseDir);
     }
 
     public static void main(String[] args) {
         try {
             new StudyVaultApp(Paths.get("data")).run();
-        } catch (NoteException e) {
-            System.out.println("StudyVault could not start: " + e.getMessage());
+        } catch (NoteException error) {
+            System.out.println("StudyVault could not start: " + error.getMessage());
         }
     }
 
@@ -48,8 +51,8 @@ public class StudyVaultApp {
                         }
                         default -> System.out.println("Invalid option '" + choice + "'. Please enter a number from the menu.");
                     }
-                } catch (NoteException e) {
-                    System.out.println("Problem: " + e.getMessage());
+                } catch (NoteException error) {
+                    System.out.println("Problem: " + error.getMessage());
                 }
             }
         } catch (NoSuchElementException endOfInput) {
@@ -168,7 +171,7 @@ public class StudyVaultApp {
         System.out.println("Type the content. Finish with a line containing only END.");
         List<String> lines = new ArrayList<>();
         while (true) {
-            String line = in.nextLine();
+            String line = scanner.nextLine();
             if (line.strip().equals("END")) {
                 return lines;
             }
@@ -182,6 +185,6 @@ public class StudyVaultApp {
 
     private String prompt(String message) {
         System.out.print(message);
-        return in.nextLine().trim();
+        return scanner.nextLine().trim();
     }
 }

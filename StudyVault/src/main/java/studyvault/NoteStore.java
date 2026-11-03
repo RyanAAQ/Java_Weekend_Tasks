@@ -1,27 +1,29 @@
 package studyvault;
 
+import studyvault.exceptions.InvalidNoteNameException;
+import studyvault.exceptions.NoteException;
+import studyvault.exceptions.NoteExistsException;
+import studyvault.exceptions.NoteNotFoundException;
+import studyvault.exceptions.NoteStorageException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class NoteStore {
 
     private static final String EXTENSION = ".txt";
-    private static final int BUFFER_SIZE = 8192;
     private static final String FORBIDDEN_CHARACTERS = "/\\<>:\"|?*";
     private static final int MAX_NAME_LENGTH = 100;
 
@@ -34,8 +36,8 @@ public class NoteStore {
         try {
             Files.createDirectories(notesDir);
             Files.createDirectories(backupsDir);
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not create the storage folders: " + e.getMessage(), e);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not create the storage folders: " + error.getMessage(), error);
         }
     }
 
@@ -47,8 +49,8 @@ public class NoteStore {
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {
             writeLines(writer, lines);
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not save the note: " + e.getMessage(), e);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not save the note: " + error.getMessage(), error);
         }
     }
 
@@ -63,8 +65,8 @@ public class NoteStore {
                 }
                 writeLines(writer, lines);
             }
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not append to the note: " + e.getMessage(), e);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not append to the note: " + error.getMessage(), error);
         }
     }
 
@@ -72,8 +74,8 @@ public class NoteStore {
         Path file = existingNote(title);
         try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
             return readAllLines(reader);
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not read the note: " + e.getMessage(), e);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not read the note: " + error.getMessage(), error);
         }
     }
 
@@ -101,8 +103,8 @@ public class NoteStore {
                         hits.add(new SearchHit(title, number, line));
                     }
                 }
-            } catch (IOException e) {
-                throw new NoteStorageException("Could not search note '" + title + "': " + e.getMessage(), e);
+            } catch (IOException error) {
+                throw new NoteStorageException("Could not search note '" + title + "': " + error.getMessage(), error);
             }
         }
         return hits;
@@ -112,8 +114,8 @@ public class NoteStore {
         Path file = existingNote(title);
         try {
             Files.delete(file);
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not delete the note: " + e.getMessage(), e);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not delete the note: " + error.getMessage(), error);
         }
     }
 
@@ -121,9 +123,9 @@ public class NoteStore {
         Path source = existingNote(title);
         Path target = backupPath(title);
         try {
-            copyBytes(source, target);
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not export the note: " + e.getMessage(), e);
+            copyFile(source, target);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not export the note: " + error.getMessage(), error);
         }
         return target;
     }
@@ -138,9 +140,9 @@ public class NoteStore {
             throw new NoteExistsException("A note called '" + cleanTitle(title) + "' already exists.");
         }
         try {
-            copyBytes(backup, target);
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not restore the note: " + e.getMessage(), e);
+            copyFile(backup, target);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not restore the note: " + error.getMessage(), error);
         }
     }
 
@@ -153,8 +155,8 @@ public class NoteStore {
             }
             return new NoteInfo(cleanTitle(title), Files.size(file), lines,
                     Files.getLastModifiedTime(file).toInstant());
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not read note details: " + e.getMessage(), e);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not read note details: " + error.getMessage(), error);
         }
     }
 
@@ -177,9 +179,9 @@ public class NoteStore {
         if (name.contains("..") || name.startsWith(".")) {
             throw new InvalidNoteNameException("A note name cannot contain '..' or start with a dot.");
         }
-        for (int i = 0; i < name.length(); i++) {
-            char c = name.charAt(i);
-            if (FORBIDDEN_CHARACTERS.indexOf(c) >= 0 || Character.isISOControl(c)) {
+        for (int index = 0; index < name.length(); index++) {
+            char character = name.charAt(index);
+            if (FORBIDDEN_CHARACTERS.indexOf(character) >= 0 || Character.isISOControl(character)) {
                 throw new InvalidNoteNameException(
                         "A note name cannot contain slashes or any of these characters: < > : \" | ? *");
             }
@@ -208,18 +210,23 @@ public class NoteStore {
     }
 
     private static List<String> listTitlesIn(Path folder) throws NoteException {
-        try (Stream<Path> files = Files.list(folder)) {
+        try (DirectoryStream<Path> paths = Files.newDirectoryStream(folder)) {
             List<String> titles = new ArrayList<>();
-            files.filter(Files::isRegularFile)
-                    .map(p -> p.getFileName().toString())
-                    .filter(n -> n.toLowerCase().endsWith(EXTENSION))
-                    .forEach(n -> titles.add(n.substring(0, n.length() - EXTENSION.length())));
+            for (Path path : paths) {
+                if (!Files.isRegularFile(path)) {
+                    continue;
+                }
+                String fileName = path.getFileName().toString();
+                if (fileName.toLowerCase().endsWith(EXTENSION)) {
+                    titles.add(fileName.substring(0, fileName.length() - EXTENSION.length()));
+                }
+            }
             Collections.sort(titles, String.CASE_INSENSITIVE_ORDER);
             return titles;
-        } catch (NoSuchFileException e) {
+        } catch (NoSuchFileException error) {
             return new ArrayList<>();
-        } catch (IOException e) {
-            throw new NoteStorageException("Could not list notes: " + e.getMessage(), e);
+        } catch (IOException error) {
+            throw new NoteStorageException("Could not list notes: " + error.getMessage(), error);
         }
     }
 
@@ -240,21 +247,14 @@ public class NoteStore {
     }
 
     private static boolean endsWithNewline(Path file) throws IOException {
-        try (RandomAccessFile raf = new RandomAccessFile(file.toFile(), "r")) {
-            raf.seek(raf.length() - 1);
-            int last = raf.read();
-            return last == '\n' || last == '\r';
+        try (RandomAccessFile reader = new RandomAccessFile(file.toFile(), "r")) {
+            reader.seek(reader.length() - 1);
+            int lastByte = reader.read();
+            return lastByte == '\n' || lastByte == '\r';
         }
     }
 
-    static void copyBytes(Path source, Path target) throws IOException {
-        try (InputStream in = new FileInputStream(source.toFile());
-             OutputStream out = new FileOutputStream(target.toFile())) {
-            byte[] buffer = new byte[BUFFER_SIZE];
-            int bytesRead;
-            while ((bytesRead = in.read(buffer)) != -1) {
-                out.write(buffer, 0, bytesRead);
-            }
-        }
+    private static void copyFile(Path source, Path target) throws IOException {
+        Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
     }
 }

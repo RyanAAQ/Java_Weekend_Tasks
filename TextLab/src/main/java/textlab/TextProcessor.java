@@ -19,8 +19,8 @@ public final class TextProcessor {
             return 0;
         }
         int count = 0;
-        for (int i = 0; i < text.length(); i++) {
-            if (!Character.isWhitespace(text.charAt(i))) {
+        for (int index = 0; index < text.length(); index++) {
+            if (!Character.isWhitespace(text.charAt(index))) {
                 count++;
             }
         }
@@ -37,14 +37,14 @@ public final class TextProcessor {
         }
         int sentences = 0;
         boolean fragmentHasContent = false;
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (isSentenceEnd(c)) {
+        for (int index = 0; index < text.length(); index++) {
+            char character = text.charAt(index);
+            if (isSentenceEnd(character)) {
                 if (fragmentHasContent) {
                     sentences++;
                     fragmentHasContent = false;
                 }
-            } else if (Character.isLetterOrDigit(c)) {
+            } else if (Character.isLetterOrDigit(character)) {
                 fragmentHasContent = true;
             }
         }
@@ -55,24 +55,7 @@ public final class TextProcessor {
     }
 
     public static String clean(String text) {
-        if (text == null) {
-            return "";
-        }
-        StringBuilder result = new StringBuilder(text.length());
-        boolean pendingSpace = false;
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (Character.isWhitespace(c)) {
-                pendingSpace = result.length() > 0;
-            } else {
-                if (pendingSpace) {
-                    result.append(' ');
-                    pendingSpace = false;
-                }
-                result.append(c);
-            }
-        }
-        return result.toString();
+        return text == null ? "" : text.strip().replaceAll("\\p{javaWhitespace}+", " ");
     }
 
     public static int wordFrequency(String text, String word) {
@@ -81,8 +64,8 @@ public final class TextProcessor {
         }
         String target = word.trim();
         int count = 0;
-        for (String w : words(text)) {
-            if (w.equalsIgnoreCase(target)) {
+        for (String currentWord : words(text)) {
+            if (currentWord.equalsIgnoreCase(target)) {
                 count++;
             }
         }
@@ -100,18 +83,18 @@ public final class TextProcessor {
         String with = replacement == null ? "" : replacement;
 
         StringBuilder result = new StringBuilder(text.length());
-        int i = 0;
-        while (i < text.length()) {
-            if (Character.isLetterOrDigit(text.charAt(i))) {
-                int start = i;
-                while (i < text.length() && Character.isLetterOrDigit(text.charAt(i))) {
-                    i++;
+        int index = 0;
+        while (index < text.length()) {
+            if (Character.isLetterOrDigit(text.charAt(index))) {
+                int start = index;
+                while (index < text.length() && Character.isLetterOrDigit(text.charAt(index))) {
+                    index++;
                 }
-                String word = text.substring(start, i);
+                String word = text.substring(start, index);
                 result.append(word.equalsIgnoreCase(wanted) ? with : word);
             } else {
-                result.append(text.charAt(i));
-                i++;
+                result.append(text.charAt(index));
+                index++;
             }
         }
         return result.toString();
@@ -122,10 +105,10 @@ public final class TextProcessor {
             return false;
         }
         StringBuilder letters = new StringBuilder();
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (Character.isLetterOrDigit(c)) {
-                letters.append(Character.toLowerCase(c));
+        for (int index = 0; index < text.length(); index++) {
+            char character = text.charAt(index);
+            if (Character.isLetterOrDigit(character)) {
+                letters.append(Character.toLowerCase(character));
             }
         }
         if (letters.length() == 0) {
@@ -142,51 +125,44 @@ public final class TextProcessor {
     public static List<String> longestWords(String text) {
         int longest = 0;
         Map<String, String> unique = new LinkedHashMap<>();
-        for (String w : words(text)) {
-            if (w.length() > longest) {
-                longest = w.length();
+        for (String word : words(text)) {
+            if (word.length() > longest) {
+                longest = word.length();
                 unique.clear();
             }
-            if (w.length() == longest) {
-                unique.putIfAbsent(w.toLowerCase(), w);
+            if (word.length() == longest) {
+                unique.putIfAbsent(word.toLowerCase(), word);
             }
         }
         return new ArrayList<>(unique.values());
     }
 
-    public static int firstDifference(String a, String b) {
-        String x = a == null ? "" : a;
-        String y = b == null ? "" : b;
-        int shared = Math.min(x.length(), y.length());
-        for (int i = 0; i < shared; i++) {
-            if (x.charAt(i) != y.charAt(i)) {
-                return i;
+    public static int firstDifference(String firstText, String secondText) {
+        String first = firstText == null ? "" : firstText;
+        String second = secondText == null ? "" : secondText;
+        int length = Math.min(first.length(), second.length());
+        for (int index = 0; index < length; index++) {
+            if (first.charAt(index) != second.charAt(index)) {
+                return index;
             }
         }
-        return x.length() == y.length() ? -1 : shared;
+        return first.length() == second.length() ? -1 : length;
     }
 
     static List<String> words(String text) {
-        List<String> found = new ArrayList<>();
-        if (text == null) {
-            return found;
+        List<String> result = new ArrayList<>();
+        if (text == null || text.isEmpty()) {
+            return result;
         }
-        int i = 0;
-        while (i < text.length()) {
-            if (Character.isLetterOrDigit(text.charAt(i))) {
-                int start = i;
-                while (i < text.length() && Character.isLetterOrDigit(text.charAt(i))) {
-                    i++;
-                }
-                found.add(text.substring(start, i));
-            } else {
-                i++;
+        for (String word : text.split("[^\\p{L}\\p{Nd}]+")) {
+            if (!word.isEmpty()) {
+                result.add(word);
             }
         }
-        return found;
+        return result;
     }
 
-    private static boolean isSentenceEnd(char c) {
-        return c == '.' || c == '!' || c == '?';
+    private static boolean isSentenceEnd(char character) {
+        return character == '.' || character == '!' || character == '?';
     }
 }
