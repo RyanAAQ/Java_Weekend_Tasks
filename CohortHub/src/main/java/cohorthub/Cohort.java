@@ -1,5 +1,7 @@
 package cohorthub;
 
+import cohorthub.exceptions.CohortException;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -150,13 +152,14 @@ public class Cohort {
     }
 
     public List<Learner> inEitherButNotBoth(String groupA, String groupB) throws CohortException {
-        Set<Learner> a = findGroup(groupA);
-        Set<Learner> b = findGroup(groupB);
-        Set<Learner> result = new HashSet<>(a);
-        result.addAll(b);
-        Set<Learner> both = new HashSet<>(a);
-        both.retainAll(b);
-        result.removeAll(both);
+        Set<Learner> firstGroup = findGroup(groupA);
+        Set<Learner> secondGroup = findGroup(groupB);
+        Set<Learner> result = new HashSet<>(firstGroup);
+        result.removeAll(secondGroup);
+
+        Set<Learner> onlyInSecondGroup = new HashSet<>(secondGroup);
+        onlyInSecondGroup.removeAll(firstGroup);
+        result.addAll(onlyInSecondGroup);
         return sorted(result);
     }
 

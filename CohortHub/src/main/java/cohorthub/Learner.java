@@ -40,14 +40,14 @@ public final class Learner {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (!(o instanceof Learner other)) {
+        if (!(other instanceof Learner learner)) {
             return false;
         }
-        return id.equals(other.id);
+        return id.equals(learner.id);
     }
 
     @Override

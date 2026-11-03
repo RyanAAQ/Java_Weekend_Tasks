@@ -1,5 +1,7 @@
 package cohorthub;
 
+import cohorthub.exceptions.CohortException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -8,11 +10,11 @@ import java.util.Scanner;
 
 public class CohortHubApp {
 
-    private final Scanner in;
+    private final Scanner scanner;
     private final Cohort cohort = new Cohort();
 
     public CohortHubApp() {
-        in = new Scanner(System.in);
+        scanner = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
@@ -45,8 +47,8 @@ public class CohortHubApp {
                         }
                         default -> System.out.println("Invalid option '" + choice + "'. Please enter a number from the menu.");
                     }
-                } catch (CohortException e) {
-                    System.out.println("Problem: " + e.getMessage());
+                } catch (CohortException error) {
+                    System.out.println("Problem: " + error.getMessage());
                 }
             }
         } catch (NoSuchElementException endOfInput) {
@@ -75,17 +77,17 @@ public class CohortHubApp {
     }
 
     private void update() throws CohortException {
-        String id = prompt("Learner ID: ");
-        cohort.find(id);
+        String learnerId = prompt("Learner ID: ");
+        cohort.find(learnerId);
         String name = prompt("New name (blank to keep): ");
         String email = prompt("New email (blank to keep): ");
-        System.out.println("Updated: " + cohort.update(id, name, email));
+        System.out.println("Updated: " + cohort.update(learnerId, name, email));
     }
 
     private void remove() throws CohortException {
-        String id = prompt("Learner ID to remove: ");
-        Learner learner = cohort.find(id);
-        cohort.remove(id);
+        String learnerId = prompt("Learner ID to remove: ");
+        Learner learner = cohort.find(learnerId);
+        cohort.remove(learnerId);
         System.out.println("Removed " + learner.getName() + " and all their group memberships and support requests.");
     }
 
@@ -108,8 +110,8 @@ public class CohortHubApp {
 
     private void addToGroup() throws CohortException {
         String group = prompt("Group name: ");
-        String id = prompt("Learner ID: ");
-        if (cohort.addToGroup(group, id)) {
+        String learnerId = prompt("Learner ID: ");
+        if (cohort.addToGroup(group, learnerId)) {
             System.out.println("Added to '" + group + "'.");
         } else {
             System.out.println("That learner is already in '" + group + "', so nothing was changed.");
@@ -117,8 +119,8 @@ public class CohortHubApp {
     }
 
     private void showLearnerGroups() throws CohortException {
-        String id = prompt("Learner ID: ");
-        List<String> groups = cohort.groupsOf(id);
+        String learnerId = prompt("Learner ID: ");
+        List<String> groups = cohort.groupsOf(learnerId);
         System.out.println(groups.isEmpty() ? "That learner is not in any group." : "Groups: " + String.join(", ", groups));
     }
 
@@ -147,6 +149,6 @@ public class CohortHubApp {
 
     private String prompt(String message) {
         System.out.print(message);
-        return in.nextLine().trim();
+        return scanner.nextLine().trim();
     }
 }

@@ -1,5 +1,7 @@
 package cohorthub;
 
+import cohorthub.exceptions.CohortException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -15,9 +17,9 @@ class CohortTest {
     @BeforeEach
     void setUp() throws Exception {
         cohort = new Cohort();
-        cohort.register("L1", "Zainab", "zainab@mail.com");
-        cohort.register("L2", "Ade", "ade@mail.com");
-        cohort.register("L3", "Ade", "ade2@mail.com");
+        cohort.register("L1", "Ryan", "ryan@mail.com");
+        cohort.register("L2", "Quadri Ariyo", "quadri@mail.com");
+        cohort.register("L3", "Quadri Ariyo", "quadri2@mail.com");
     }
 
     private static List<String> ids(List<Learner> learners) {
@@ -26,56 +28,56 @@ class CohortTest {
 
     @Test
     void duplicateLearnerIdIsRejected() {
-        assertThrows(CohortException.class, () -> cohort.register("L1", "Someone", "new@mail.com"));
+        assertThrows(CohortException.class, () -> cohort.register("L1", "Quadri Ariyo", "new@mail.com"));
         assertEquals(3, cohort.totalLearners());
     }
 
     @Test
     void duplicateEmailIsRejectedIgnoringCase() {
-        CohortException e = assertThrows(CohortException.class,
-                () -> cohort.register("L9", "Someone", "ZAINAB@MAIL.COM"));
-        assertTrue(e.getMessage().contains("already registered"));
+        CohortException error = assertThrows(CohortException.class,
+                () -> cohort.register("L9", "Quadri Ariyo", "RYAN@MAIL.COM"));
+        assertTrue(error.getMessage().contains("already registered"));
         assertEquals(3, cohort.totalLearners());
     }
 
     @Test
     void blankFieldsAndBadEmailsAreRejected() {
-        assertThrows(CohortException.class, () -> cohort.register(" ", "N", "n@mail.com"));
+        assertThrows(CohortException.class, () -> cohort.register(" ", "Ryan", "ryan@mail.com"));
         assertThrows(CohortException.class, () -> cohort.register("L9", "", "n@mail.com"));
-        assertThrows(CohortException.class, () -> cohort.register("L9", "N", "not-an-email"));
-        assertThrows(CohortException.class, () -> cohort.register("L9", "N", "a@@b.com"));
-        assertThrows(CohortException.class, () -> cohort.register("L9", "N", null));
+        assertThrows(CohortException.class, () -> cohort.register("L9", "Ryan", "not-an-email"));
+        assertThrows(CohortException.class, () -> cohort.register("L9", "Ryan", "a@@b.com"));
+        assertThrows(CohortException.class, () -> cohort.register("L9", "Ryan", null));
     }
 
     @Test
     void findingAnUnknownLearnerGivesAHelpfulError() {
         assertThrows(CohortException.class, () -> cohort.find("NOPE"));
-        assertEquals("Zainab", assertDoesNotThrow(() -> cohort.find("L1")).getName());
+        assertEquals("Ryan", assertDoesNotThrow(() -> cohort.find("L1")).getName());
     }
 
     @Test
     void updateChangesNameAndEmailButNeverTheId() throws Exception {
-        Learner updated = cohort.update("L1", "Zainab Bello", "zb@mail.com");
+        Learner updated = cohort.update("L1", "Quadri Ariyo", "quadri.ariyo@mail.com");
         assertEquals("L1", updated.getId());
-        assertEquals("Zainab Bello", updated.getName());
-        assertEquals("zb@mail.com", updated.getEmail());
+        assertEquals("Quadri Ariyo", updated.getName());
+        assertEquals("quadri.ariyo@mail.com", updated.getEmail());
     }
 
     @Test
     void updateCannotTakeAnotherLearnersEmail() {
-        assertThrows(CohortException.class, () -> cohort.update("L1", "", "ADE@mail.com"));
+        assertThrows(CohortException.class, () -> cohort.update("L1", "", "QUADRI@mail.com"));
     }
 
     @Test
     void updatingToYourOwnEmailIsFine() throws Exception {
-        assertDoesNotThrow(() -> cohort.update("L1", "New Name", "zainab@mail.com"));
+        assertDoesNotThrow(() -> cohort.update("L1", "Quadri Ariyo", "ryan@mail.com"));
     }
 
     @Test
     void updatingANameDoesNotBreakGroupMembership() throws Exception {
         cohort.createGroup("Java");
         cohort.addToGroup("Java", "L1");
-        cohort.update("L1", "Completely Different", "");
+        cohort.update("L1", "Quadri Ariyo", "");
         assertEquals(List.of("Java"), cohort.groupsOf("L1"));
         assertFalse(cohort.addToGroup("Java", "L1"));
     }
@@ -89,7 +91,7 @@ class CohortTest {
     void sortingDoesNotCorruptIdLookup() throws Exception {
         List<Learner> sorted = cohort.learnersSorted();
         sorted.clear();
-        assertEquals("Ade", cohort.find("L2").getName());
+        assertEquals("Quadri Ariyo", cohort.find("L2").getName());
         assertEquals(3, cohort.totalLearners());
     }
 
@@ -214,10 +216,10 @@ class CohortTest {
 
     @Test
     void learnersWithTheSameIdAreEqualRegardlessOfNameAndEmail() {
-        Learner a = new Learner("X", "One", "one@mail.com");
-        Learner b = new Learner("X", "Two", "two@mail.com");
-        assertEquals(a, b);
-        assertEquals(a.hashCode(), b.hashCode());
-        assertNotEquals(a, new Learner("Y", "One", "one@mail.com"));
+        Learner firstLearner = new Learner("X", "Ryan", "ryan@mail.com");
+        Learner secondLearner = new Learner("X", "Quadri Ariyo", "quadri@mail.com");
+        assertEquals(firstLearner, secondLearner);
+        assertEquals(firstLearner.hashCode(), secondLearner.hashCode());
+        assertNotEquals(firstLearner, new Learner("Y", "Ryan", "ryan@mail.com"));
     }
 }
