@@ -6,14 +6,11 @@ import safebank.exceptions.InvalidAmountException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
+
 import org.junit.jupiter.api.Test;
 
-class BankAndAppTest {
+class BankTest {
 
     private static BigDecimal bd(String value) {
         return new BigDecimal(value);
