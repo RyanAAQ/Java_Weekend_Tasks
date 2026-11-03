@@ -21,9 +21,7 @@ class BankTest {
         Bank bank = new Bank();
         Account sourceAccount = bank.openAccount("Ryan", bd("10000"));
         Account destinationAccount = bank.openAccount("Quadri Ariyo", bd("500"));
-
         bank.transfer(sourceAccount.getId(), destinationAccount.getId(), bd("2500"));
-
         assertEquals(0, bd("7500").compareTo(sourceAccount.getBalance()));
         assertEquals(0, bd("3000").compareTo(destinationAccount.getBalance()));
         assertEquals(Transaction.Type.TRANSFER_OUT, sourceAccount.getHistory().get(1).type());
@@ -35,7 +33,6 @@ class BankTest {
         Bank bank = new Bank();
         Account sourceAccount = bank.openAccount("Ryan", bd("1000"));
         Account destinationAccount = bank.openAccount("Quadri Ariyo", bd("500"));
-
         assertThrows(InsufficientFundsException.class, () -> bank.transfer(sourceAccount.getId(), destinationAccount.getId(), bd("5000")));
         assertThrows(InvalidAmountException.class, () -> bank.transfer(sourceAccount.getId(), destinationAccount.getId(), bd("-5")));
         assertThrows(InvalidAccountException.class, () -> bank.transfer(sourceAccount.getId(), "ACC-9999", bd("10")));
