@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
@@ -23,18 +22,18 @@ public class Cohort {
     private final Queue<Learner> supportQueue = new ArrayDeque<>();
 
     public Learner register(String id, String name, String email) throws CohortException {
-        String cleanId = requireText(id, "Learner ID");
-        String cleanName = requireText(name, "Name");
-        String cleanEmail = requireEmail(email);
+        id = checkText(id, "Learner ID");
+        name = checkText(name, "Name");
+        email = checkEmail(email);
 
-        if (learners.containsKey(cleanId)) {
-            throw new CohortException("A learner with ID '" + cleanId + "' is already registered.");
+        if (learners.containsKey(id)) {
+            throw new CohortException("A learner with ID '" + id + "' is already registered.");
         }
-        if (emailInUse(cleanEmail, null)) {
-            throw new CohortException("The email '" + cleanEmail + "' is already registered.");
+        if (emailInUse(email, null)) {
+            throw new CohortException("The email '" + email + "' is already registered.");
         }
-        Learner learner = new Learner(cleanId, cleanName, cleanEmail);
-        learners.put(cleanId, learner);
+        Learner learner = new Learner(id, name, email);
+        learners.put(id, learner);
         return learner;
     }
 
@@ -49,7 +48,7 @@ public class Cohort {
     public Learner update(String id, String newName, String newEmail) throws CohortException {
         Learner learner = find(id);
         String name = (newName == null || newName.isBlank()) ? learner.getName() : newName.trim();
-        String email = (newEmail == null || newEmail.isBlank()) ? learner.getEmail() : requireEmail(newEmail);
+        String email = (newEmail == null || newEmail.isBlank()) ? learner.getEmail() : checkEmail(newEmail);
 
         if (emailInUse(email, learner)) {
             throw new CohortException("The email '" + email + "' is already registered to another learner.");
@@ -75,7 +74,7 @@ public class Cohort {
     }
 
     public void createGroup(String groupName) throws CohortException {
-        String name = requireText(groupName, "Group name");
+        String name = checkText(groupName, "Group name");
         if (groups.containsKey(name)) {
             throw new CohortException("A group called '" + name + "' already exists.");
         }
@@ -172,9 +171,8 @@ public class Cohort {
     }
 
     private boolean emailInUse(String email, Learner except) {
-        String wanted = email.toLowerCase(Locale.ROOT);
         for (Learner learner : learners.values()) {
-            if (learner != except && learner.getEmail().toLowerCase(Locale.ROOT).equals(wanted)) {
+            if (learner != except && learner.getEmail().equalsIgnoreCase(email)) {
                 return true;
             }
         }
@@ -187,21 +185,24 @@ public class Cohort {
         return Collections.unmodifiableList(list);
     }
 
-    private static String requireText(String value, String label) throws CohortException {
+    private static String checkText(String value, String label) throws CohortException {
         if (value == null || value.isBlank()) {
             throw new CohortException(label + " cannot be blank.");
         }
         return value.trim();
     }
 
-    private static String requireEmail(String email) throws CohortException {
-        String clean = requireText(email, "Email");
-        int at = clean.indexOf('@');
-        boolean looksValid = at > 0 && at == clean.lastIndexOf('@') && clean.indexOf('.', at) > at + 1
-                && !clean.endsWith(".") && !clean.contains(" ");
-        if (!looksValid) {
-            throw new CohortException("'" + clean + "' is not a valid email address.");
+    private static String checkEmail(String email) throws CohortException {
+        email = checkText(email, "Email");
+        int atPosition = email.indexOf('@');
+        if (atPosition <= 0 || atPosition != email.lastIndexOf('@')) {
+            throw new CohortException("'" + email + "' is not a valid email address.");
         }
-        return clean;
+
+        String domain = email.substring(atPosition + 1);
+        if (domain.indexOf('.') <= 0 || domain.endsWith(".") || email.contains(" ")) {
+            throw new CohortException("'" + email + "' is not a valid email address.");
+        }
+        return email;
     }
 }

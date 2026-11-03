@@ -10,7 +10,7 @@ public class InsufficientFundsException extends BankException {
         this.shortfall = shortfall;
     }
 
-    public BigDecimal getShortfall() {
+    public BigDecimal  getShortfall() {
         return shortfall;
     }
 }
