@@ -202,19 +202,6 @@ class CohortTest {
     }
 
     @Test
-    void setOperationsShowLearnersInBothAndInEitherButNotBoth() throws Exception {
-        cohort.createGroup("Java");
-        cohort.createGroup("Algorithms");
-        cohort.addToGroup("Java", "L1");
-        cohort.addToGroup("Java", "L2");
-        cohort.addToGroup("Algorithms", "L2");
-        cohort.addToGroup("Algorithms", "L3");
-
-        assertEquals(List.of("L2"), ids(cohort.inBoth("Java", "Algorithms")));
-        assertEquals(List.of("L3", "L1"), ids(cohort.inEitherButNotBoth("Java", "Algorithms")));
-    }
-
-    @Test
     void learnersWithTheSameIdAreEqualRegardlessOfNameAndEmail() {
         Learner firstLearner = new Learner("X", "Ryan", "ryan@mail.com");
         Learner secondLearner = new Learner("X", "Quadri Ariyo", "quadri@mail.com");

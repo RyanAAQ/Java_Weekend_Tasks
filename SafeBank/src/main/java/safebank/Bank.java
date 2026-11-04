@@ -16,7 +16,7 @@ public class Bank {
     private int nextNumber = 1001;
 
     public Account openAccount(String holderName, BigDecimal openingBalance) throws InvalidAccountException {
-        Account account = new Account("ACC-" + nextNumber, holderName, openingBalance);
+        Account account = new Account("ACC" + nextNumber, holderName, openingBalance);
         accounts.put(account.getId(), account);
         nextNumber++;
         return account;
@@ -34,16 +34,15 @@ public class Bank {
         return new ArrayList<>(accounts.values());
     }
 
-    public void transfer(String fromId, String toId, BigDecimal amount)
-            throws InvalidAccountException, InvalidAmountException, InsufficientFundsException {
-        Account from = find(fromId);
-        Account to = find(toId);
-        if (from == to) {
+    public void transfer(String fromId, String toId, BigDecimal amount) throws InvalidAccountException, InvalidAmountException, InsufficientFundsException {
+        Account meAccount = find(fromId);
+        Account myGuy = find(toId);
+        if (meAccount == myGuy) {
             throw new InvalidAccountException("Cannot transfer to the same account.");
         }
-        from.validateTransferOut(amount);
-        to.validateDeposit(amount);
-        from.applyTransferOut(amount);
-        to.applyTransferIn(amount);
+        meAccount.validateTransferOut(amount);
+        myGuy.validateDeposit(amount);
+        meAccount.applyTransferOut(amount);
+        myGuy.applyTransferIn(amount);
     }
 }

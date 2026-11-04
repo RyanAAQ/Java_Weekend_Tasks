@@ -63,7 +63,7 @@ public class SafeBankApp {
 
     private void createAccount() {
         String name = prompt("Account holder's name: ");
-        BigDecimal opening = readAmount("Opening balance (₦): ");
+        BigDecimal opening = readAmount("Opening balance ($): ");
         if (opening == null) {
             return;
         }
@@ -95,7 +95,7 @@ public class SafeBankApp {
         if (!hasAccount()) {
             return;
         }
-        BigDecimal amount = readAmount("Deposit amount (₦): ");
+        BigDecimal amount = readAmount("Deposit amount ($): ");
         if (amount == null) {
             return;
         }
@@ -111,7 +111,7 @@ public class SafeBankApp {
         if (!hasAccount()) {
             return;
         }
-        BigDecimal amount = readAmount("Withdrawal amount (₦): ");
+        BigDecimal amount = readAmount("Withdrawal amount ($): ");
         if (amount == null) {
             return;
         }
@@ -164,6 +164,6 @@ public class SafeBankApp {
     }
 
     private static String money(BigDecimal value) {
-        return String.format("₦%,.2f", value);
+        return String.format("$%,.2f", value);
     }
 }

@@ -71,8 +71,7 @@ public class Account {
             throws InvalidAmountException, InsufficientFundsException, WithdrawalLimitExceededException {
         validateDebitable(amount);
         if (amount.compareTo(WITHDRAWAL_LIMIT) > 0) {
-            throw new WithdrawalLimitExceededException(String.format(
-                    "The single-withdrawal limit is ₦%,.2f.", WITHDRAWAL_LIMIT));
+            throw new WithdrawalLimitExceededException(String.format("The single-withdrawal limit is $%,.2f.", WITHDRAWAL_LIMIT));
         }
     }
 
@@ -92,8 +91,7 @@ public class Account {
         requirePositive(amount);
         if (amount.compareTo(balance) > 0) {
             BigDecimal shortfall = amount.subtract(balance);
-            throw new InsufficientFundsException(String.format(
-                    "Insufficient funds: balance is ₦%,.2f but ₦%,.2f was requested.", balance, amount), shortfall);
+            throw new InsufficientFundsException(String.format("Insufficient funds: balance is $%,.2f but $%,.2f was requested.", balance, amount), shortfall);
         }
     }
 

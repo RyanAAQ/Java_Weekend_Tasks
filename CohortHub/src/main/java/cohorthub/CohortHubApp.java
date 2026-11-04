@@ -47,12 +47,12 @@ public class CohortHubApp {
                         }
                         default -> System.out.println("Invalid option '" + choice + "'. Please enter a number from the menu.");
                     }
-                } catch (CohortException error) {
-                    System.out.println("Problem: " + error.getMessage());
+                } catch (CohortException e) {
+                    System.out.println("Problem: " + e.getMessage());
                 }
             }
-        } catch (NoSuchElementException endOfInput) {
-            System.out.println("\nNo more input. Goodbye!");
+        } catch (NoSuchElementException e) {
+            System.out.println("\nGoodbye!");
         }
     }
 

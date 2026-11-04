@@ -144,24 +144,6 @@ public class Cohort {
         return counts;
     }
 
-    public List<Learner> inBoth(String groupA, String groupB) throws CohortException {
-        Set<Learner> result = new HashSet<>(findGroup(groupA));
-        result.retainAll(findGroup(groupB));
-        return sorted(result);
-    }
-
-    public List<Learner> inEitherButNotBoth(String groupA, String groupB) throws CohortException {
-        Set<Learner> firstGroup = findGroup(groupA);
-        Set<Learner> secondGroup = findGroup(groupB);
-        Set<Learner> result = new HashSet<>(firstGroup);
-        result.removeAll(secondGroup);
-
-        Set<Learner> onlyInSecondGroup = new HashSet<>(secondGroup);
-        onlyInSecondGroup.removeAll(firstGroup);
-        result.addAll(onlyInSecondGroup);
-        return sorted(result);
-    }
-
     private Set<Learner> findGroup(String groupName) throws CohortException {
         Set<Learner> members = groupName == null ? null : groups.get(groupName.trim());
         if (members == null) {
@@ -177,12 +159,6 @@ public class Cohort {
             }
         }
         return false;
-    }
-
-    private static List<Learner> sorted(Collection<Learner> learners) {
-        List<Learner> list = new ArrayList<>(learners);
-        list.sort(Learner.BY_NAME_THEN_ID);
-        return Collections.unmodifiableList(list);
     }
 
     private static String checkText(String value, String label) throws CohortException {

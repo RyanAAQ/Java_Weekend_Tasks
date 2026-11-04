@@ -11,8 +11,8 @@ Current account: none selected
 0. Exit
 Choose an option: 1
 Account holder's name: Ada Okafor
-Opening balance (₦): 200000
-Account created: ACC-1001 for Ada Okafor with balance ₦200,000.00
+Opening balance ($): 200000
+Account created: ACC-1001 for Ada Okafor with balance $200,000.00
 
 Current account: ACC-1001 (Ada Okafor)
 1. Create account
@@ -24,7 +24,7 @@ Current account: ACC-1001 (Ada Okafor)
 7. Transfer (stretch)
 0. Exit
 Choose an option: 3
-Deposit amount (₦): -500
+Deposit amount ($): -500
 Deposit rejected. Amount must be greater than zero.
 
 Current account: ACC-1001 (Ada Okafor)
@@ -37,8 +37,8 @@ Current account: ACC-1001 (Ada Okafor)
 7. Transfer (stretch)
 0. Exit
 Choose an option: 4
-Withdrawal amount (₦): 120000
-Withdrawal rejected. The single-withdrawal limit is ₦100,000.00.
+Withdrawal amount ($): 120000
+Withdrawal rejected. The single-withdrawal limit is $100,000.00.
 
 Current account: ACC-1001 (Ada Okafor)
 1. Create account
@@ -50,7 +50,7 @@ Current account: ACC-1001 (Ada Okafor)
 7. Transfer (stretch)
 0. Exit
 Choose an option: 4
-Withdrawal amount (₦): abc
+Withdrawal amount ($): abc
 'abc' is not a valid number. Please enter digits only, for example 2500 or 2500.50.
 
 Current account: ACC-1001 (Ada Okafor)
@@ -63,8 +63,8 @@ Current account: ACC-1001 (Ada Okafor)
 7. Transfer (stretch)
 0. Exit
 Choose an option: 3
-Deposit amount (₦): 1000
-Deposit successful. New balance: ₦201,000.00
+Deposit amount ($): 1000
+Deposit successful. New balance: $201,000.00
 
 Current account: ACC-1001 (Ada Okafor)
 1. Create account
@@ -76,8 +76,8 @@ Current account: ACC-1001 (Ada Okafor)
 7. Transfer (stretch)
 0. Exit
 Choose an option: 4
-Withdrawal amount (₦): 300000
-Withdrawal rejected. Insufficient funds: balance is ₦201,000.00 but ₦300,000.00 was requested.
+Withdrawal amount ($): 300000
+Withdrawal rejected. Insufficient funds: balance is $201,000.00 but $300,000.00 was requested.
 
 Current account: ACC-1001 (Ada Okafor)
 1. Create account
@@ -90,8 +90,8 @@ Current account: ACC-1001 (Ada Okafor)
 0. Exit
 Choose an option: 1
 Account holder's name: Bola Adeyemi
-Opening balance (₦): 500
-Account created: ACC-1002 for Bola Adeyemi with balance ₦500.00
+Opening balance ($): 500
+Account created: ACC-1002 for Bola Adeyemi with balance $500.00
 
 Current account: ACC-1002 (Bola Adeyemi)
 1. Create account
@@ -103,8 +103,8 @@ Current account: ACC-1002 (Bola Adeyemi)
 7. Transfer (stretch)
 0. Exit
 Choose an option: 2
-  ACC-1001  Ada Okafor  ₦201,000.00
-  ACC-1002  Bola Adeyemi  ₦500.00
+  ACC-1001  Ada Okafor  $201,000.00
+  ACC-1002  Bola Adeyemi  $500.00
 Enter account ID: ACC-1001
 Now using ACC-1001.
 
@@ -119,7 +119,7 @@ Current account: ACC-1001 (Ada Okafor)
 0. Exit
 Choose an option: 7
 Send to account ID: ACC-9999
-Transfer amount (₦): 100
+Transfer amount ($): 100
 Transfer rejected. No account found with ID 'ACC-9999'.
 
 Current account: ACC-1001 (Ada Okafor)
@@ -133,8 +133,8 @@ Current account: ACC-1001 (Ada Okafor)
 0. Exit
 Choose an option: 7
 Send to account ID: ACC-1002
-Transfer amount (₦): 25000
-Transfer successful. Your new balance: ₦176,000.00
+Transfer amount ($): 25000
+Transfer successful. Your new balance: $176,000.00
 
 Current account: ACC-1001 (Ada Okafor)
 1. Create account
@@ -147,8 +147,8 @@ Current account: ACC-1001 (Ada Okafor)
 0. Exit
 Choose an option: 7
 Send to account ID: ACC-1002
-Transfer amount (₦): 900000
-Transfer rejected. Insufficient funds: balance is ₦176,000.00 but ₦900,000.00 was requested.
+Transfer amount ($): 900000
+Transfer rejected. Insufficient funds: balance is $176,000.00 but $900,000.00 was requested.
 
 Current account: ACC-1001 (Ada Okafor)
 1. Create account
@@ -175,7 +175,7 @@ Current account: ACC-1001 (Ada Okafor)
 7. Transfer (stretch)
 0. Exit
 Choose an option: 5
-Balance for ACC-1001: ₦176,000.00
+Balance for ACC-1001: $176,000.00
 
 Current account: ACC-1001 (Ada Okafor)
 1. Create account
