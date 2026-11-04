@@ -6,8 +6,7 @@ import java.util.Objects;
 public final class Learner {
 
     public static final Comparator<Learner> BY_NAME_THEN_ID =
-            Comparator.comparing((Learner learner) -> learner.getName(),String.CASE_INSENSITIVE_ORDER
-            ).thenComparing(learner -> learner.getId());
+            Comparator.comparing((Learner learner) -> learner.getName(),String.CASE_INSENSITIVE_ORDER).thenComparing(learner -> learner.getId());
 
     private final String id;
     private String name;
